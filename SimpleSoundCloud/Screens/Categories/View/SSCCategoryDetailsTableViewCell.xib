@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="70" id="KGk-i7-Jjw" customClass="SSCCategoryDetailsTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="70"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="69"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="RpU-gu-byR">
+                        <rect key="frame" x="10" y="5" width="56" height="59"/>
+                        <animations/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="56" id="HBy-zq-a7q"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ReO-nh-C2j">
+                        <rect key="frame" x="74" y="10" width="198" height="26"/>
+                        <animations/>
+                        <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Like:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dzw-jV-gem">
+                        <rect key="frame" x="74" y="44" width="31" height="17"/>
+                        <animations/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" red="0.72941176470000002" green="0.73333333329999995" blue="0.74117647060000003" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="99999" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Xb-h9-422">
+                        <rect key="frame" x="115" y="44" width="44" height="17"/>
+                        <animations/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" red="0.72941176470000002" green="0.73333333329999995" blue="0.74117647060000003" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Play:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dXg-aK-0Se">
+                        <rect key="frame" x="164" y="44" width="31" height="17"/>
+                        <animations/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" red="0.72941176470000002" green="0.73333333329999995" blue="0.74117647060000003" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="99999" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rJU-xs-xdz">
+                        <rect key="frame" x="205" y="44" width="44" height="17"/>
+                        <animations/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" red="0.72941176470000002" green="0.73333333329999995" blue="0.74117647060000003" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Voi-Bn-l1W">
+                        <rect key="frame" x="288" y="20" width="22" height="29"/>
+                        <animations/>
+                        <state key="normal" image="icon_plus.png"/>
+                        <state key="selected" image="icon_check.png"/>
+                        <connections>
+                            <action selector="trackAddClicked:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="tn3-yq-MMf"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <animations/>
+                <constraints>
+                    <constraint firstItem="Dzw-jV-gem" firstAttribute="leading" secondItem="RpU-gu-byR" secondAttribute="trailing" constant="8" id="2Yr-To-Cbn"/>
+                    <constraint firstAttribute="bottom" secondItem="rJU-xs-xdz" secondAttribute="bottom" constant="8" id="51w-tc-koh"/>
+                    <constraint firstItem="RpU-gu-byR" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="5CQ-BX-aQh"/>
+                    <constraint firstItem="5Xb-h9-422" firstAttribute="leading" secondItem="Dzw-jV-gem" secondAttribute="trailing" constant="10" id="5Ve-Fc-txH"/>
+                    <constraint firstAttribute="bottom" secondItem="5Xb-h9-422" secondAttribute="bottom" constant="8" id="5bh-O0-2M7"/>
+                    <constraint firstItem="ReO-nh-C2j" firstAttribute="leading" secondItem="RpU-gu-byR" secondAttribute="trailing" constant="8" id="9Ri-dn-n19"/>
+                    <constraint firstAttribute="bottom" secondItem="Dzw-jV-gem" secondAttribute="bottom" constant="8" id="C3k-m8-3IP"/>
+                    <constraint firstItem="rJU-xs-xdz" firstAttribute="leading" secondItem="dXg-aK-0Se" secondAttribute="trailing" constant="10" id="C71-wn-M06"/>
+                    <constraint firstItem="RpU-gu-byR" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="D7q-Iu-PNm"/>
+                    <constraint firstAttribute="trailing" secondItem="Voi-Bn-l1W" secondAttribute="trailing" constant="10" id="QLo-bn-ivc"/>
+                    <constraint firstItem="dXg-aK-0Se" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" constant="20" id="ZfM-r8-Fix"/>
+                    <constraint firstItem="ReO-nh-C2j" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="c2A-dO-RPV"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="ReO-nh-C2j" secondAttribute="trailing" constant="40" id="lbt-ug-UpK"/>
+                    <constraint firstItem="RpU-gu-byR" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="ldH-29-xSt"/>
+                    <constraint firstAttribute="bottom" secondItem="dXg-aK-0Se" secondAttribute="bottom" constant="8" id="m9f-1c-xYp"/>
+                    <constraint firstItem="Voi-Bn-l1W" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="20" id="s7d-3J-jaK"/>
+                    <constraint firstAttribute="bottom" secondItem="Voi-Bn-l1W" secondAttribute="bottom" constant="20" id="xyR-Dy-rok"/>
+                </constraints>
+            </tableViewCellContentView>
+            <animations/>
+            <connections>
+                <outlet property="trackAdd" destination="Voi-Bn-l1W" id="4hX-rH-nxx"/>
+                <outlet property="trackArtWork" destination="RpU-gu-byR" id="vI3-iB-Bcd"/>
+                <outlet property="trackLike" destination="5Xb-h9-422" id="ghs-we-Fr0"/>
+                <outlet property="trackName" destination="ReO-nh-C2j" id="KRg-a7-NZJ"/>
+                <outlet property="trackPlay" destination="rJU-xs-xdz" id="Tk7-n2-5tW"/>
+            </connections>
+            <point key="canvasLocation" x="405" y="362"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="icon_check.png" width="22" height="22"/>
+        <image name="icon_plus.png" width="22" height="22"/>
+    </resources>
+</document>
