@@ -56,9 +56,9 @@
 //get data from URL https://api-v2.soundcloud.com/explore/categories
 //using parse json, set data to NSMutableArray
 - (void)setupData {
-    NSString *urlString = @"https://api-v2.soundcloud.com/explore/categories";
+//    NSString *urlString = @"https://api-v2.soundcloud.com/explore/categories";
     __weak typeof(self) self_weak = self;
-    [[SSCNetworkingManager shareInstance] getJsonDataWithURL:urlString success:^(NSDictionary *responseDict) {
+    [[SSCNetworkingManager shareInstance] getJsonDataWithGenre:@"categories" andLimit:0 andOffset:0 success:^(NSDictionary *responseDict) {
         //code
         self_weak.categories = responseDict;
         [self_weak.tableView reloadData];

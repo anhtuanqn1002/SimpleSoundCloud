@@ -45,6 +45,8 @@
 		450D800E1C19516A0086EBC6 /* UIImageView+HighlightedWebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 450D7FFC1C19516A0086EBC6 /* UIImageView+HighlightedWebCache.m */; settings = {ASSET_TAGS = (); }; };
 		450D800F1C19516A0086EBC6 /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 450D7FFE1C19516A0086EBC6 /* UIImageView+WebCache.m */; settings = {ASSET_TAGS = (); }; };
 		450D80101C19516A0086EBC6 /* UIView+WebCacheOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 450D80001C19516A0086EBC6 /* UIView+WebCacheOperation.m */; settings = {ASSET_TAGS = (); }; };
+		4553C6791C1FEE1800E70942 /* UIScrollView+SVInfiniteScrolling.m in Sources */ = {isa = PBXBuildFile; fileRef = 4553C6761C1FEE1800E70942 /* UIScrollView+SVInfiniteScrolling.m */; settings = {ASSET_TAGS = (); }; };
+		4553C67A1C1FEE1800E70942 /* UIScrollView+SVPullToRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = 4553C6781C1FEE1800E70942 /* UIScrollView+SVPullToRefresh.m */; settings = {ASSET_TAGS = (); }; };
 		45701DE81C15725500F5E9AE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 45701DE71C15725500F5E9AE /* main.m */; };
 		45701DEB1C15725500F5E9AE /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 45701DEA1C15725500F5E9AE /* AppDelegate.m */; };
 		45701DF41C15725500F5E9AE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 45701DF21C15725500F5E9AE /* Main.storyboard */; };
@@ -126,6 +128,11 @@
 		450D7FFE1C19516A0086EBC6 /* UIImageView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+WebCache.m"; sourceTree = "<group>"; };
 		450D7FFF1C19516A0086EBC6 /* UIView+WebCacheOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+WebCacheOperation.h"; sourceTree = "<group>"; };
 		450D80001C19516A0086EBC6 /* UIView+WebCacheOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WebCacheOperation.m"; sourceTree = "<group>"; };
+		4553C6741C1FEE1800E70942 /* SVPullToRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPullToRefresh.h; sourceTree = "<group>"; };
+		4553C6751C1FEE1800E70942 /* UIScrollView+SVInfiniteScrolling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+SVInfiniteScrolling.h"; sourceTree = "<group>"; };
+		4553C6761C1FEE1800E70942 /* UIScrollView+SVInfiniteScrolling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+SVInfiniteScrolling.m"; sourceTree = "<group>"; };
+		4553C6771C1FEE1800E70942 /* UIScrollView+SVPullToRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+SVPullToRefresh.h"; sourceTree = "<group>"; };
+		4553C6781C1FEE1800E70942 /* UIScrollView+SVPullToRefresh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+SVPullToRefresh.m"; sourceTree = "<group>"; };
 		45701DE31C15725500F5E9AE /* SimpleSoundCloud.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleSoundCloud.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		45701DE71C15725500F5E9AE /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		45701DE91C15725500F5E9AE /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -193,6 +200,7 @@
 		4507406B1C1813DD005EF4A6 /* Thirdparty */ = {
 			isa = PBXGroup;
 			children = (
+				4553C6731C1FEE1800E70942 /* SVPullToRefresh */,
 				45E2397A1C1A8278009317B7 /* SVProgressHUD */,
 				45E239661C1A6D7F009317B7 /* FMDB */,
 				450D7FDF1C19516A0086EBC6 /* SDWebImage */,
@@ -403,6 +411,18 @@
 			path = SDWebImage;
 			sourceTree = "<group>";
 		};
+		4553C6731C1FEE1800E70942 /* SVPullToRefresh */ = {
+			isa = PBXGroup;
+			children = (
+				4553C6741C1FEE1800E70942 /* SVPullToRefresh.h */,
+				4553C6751C1FEE1800E70942 /* UIScrollView+SVInfiniteScrolling.h */,
+				4553C6761C1FEE1800E70942 /* UIScrollView+SVInfiniteScrolling.m */,
+				4553C6771C1FEE1800E70942 /* UIScrollView+SVPullToRefresh.h */,
+				4553C6781C1FEE1800E70942 /* UIScrollView+SVPullToRefresh.m */,
+			);
+			path = SVPullToRefresh;
+			sourceTree = "<group>";
+		};
 		45701DDA1C15725500F5E9AE = {
 			isa = PBXGroup;
 			children = (
@@ -583,6 +603,7 @@
 				45E239831C1A8278009317B7 /* SVIndefiniteAnimatedView.m in Sources */,
 				450D80091C19516A0086EBC6 /* SDWebImagePrefetcher.m in Sources */,
 				450D80071C19516A0086EBC6 /* SDWebImageDownloaderOperation.m in Sources */,
+				4553C6791C1FEE1800E70942 /* UIScrollView+SVInfiniteScrolling.m in Sources */,
 				45E239741C1A6D7F009317B7 /* FMDatabasePool.m in Sources */,
 				45E239721C1A6D7F009317B7 /* FMDatabase.m in Sources */,
 				450740A21C181A51005EF4A6 /* SSCCategoryDetailsTableViewController.m in Sources */,
@@ -590,6 +611,7 @@
 				45E239751C1A6D7F009317B7 /* FMDatabaseQueue.m in Sources */,
 				45E239761C1A6D7F009317B7 /* FMResultSet.m in Sources */,
 				450D800C1C19516A0086EBC6 /* UIImage+MultiFormat.m in Sources */,
+				4553C67A1C1FEE1800E70942 /* UIScrollView+SVPullToRefresh.m in Sources */,
 				450740AE1C1821CE005EF4A6 /* SSCTrackModel.m in Sources */,
 				450D80031C19516A0086EBC6 /* SDImageCache.m in Sources */,
 				45701DE81C15725500F5E9AE /* main.m in Sources */,

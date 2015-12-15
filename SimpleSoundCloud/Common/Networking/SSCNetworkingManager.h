@@ -12,6 +12,6 @@
 
 + (instancetype)shareInstance;
 
-- (void)getJsonDataWithURL:(NSString *)urlString success : (void (^)(NSDictionary *response))success failure:(void(^)(NSError *error))failure;
+- (void)getJsonDataWithGenre:(NSString *)genre andLimit:(NSInteger)limit andOffset:(NSInteger)offset success:(void(^)(NSDictionary *response))success failure:(void(^)(NSError *error))failure;
 
 @end

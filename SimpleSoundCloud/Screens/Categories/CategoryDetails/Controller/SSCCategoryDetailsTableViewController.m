@@ -13,15 +13,16 @@
 #import "SSCTrackModel.h"
 #import "SVProgressHUD.h"
 #import "SSCDatabaseManager.h"
+#import "SVPullToRefresh.h"
 
 @interface SSCCategoryDetailsTableViewController () <SSCCategoryDetailsTableViewCellDelegate>
 
-@property (nonatomic, strong) NSString *urlString;
-
+@property (nonatomic, assign) NSInteger limit;
+@property (nonatomic, assign) NSInteger offset;
 @property (nonatomic, strong) NSMutableArray *songs;
 
 //using get next data (load more)
-@property (nonatomic, strong) NSString *nextLink;
+//@property (nonatomic, strong) NSString *nextLink;
 
 @end
 
@@ -45,13 +46,16 @@
     
     [self.tableView registerNib:[UINib nibWithNibName:@"SSCCategoryDetailsTableViewCell" bundle:nil] forCellReuseIdentifier:@"SSCCategoryDetailsTableViewCell"];
     
+    //start with contents
+    self.limit = 50;
+    self.offset = 0;
+    
     if (self.genres != nil) {
         NSLog(@"%@", self.genres);
         self.title = self.genres;
-        self.urlString = [NSString stringWithFormat:@"https://api-v2.soundcloud.com/explore/%@?limit=50&offset=0", self.genres];
-        NSLog(@"%@", self.urlString);
+        
         self.songs = [[NSMutableArray alloc] init];
-        [self setupData:self.urlString];
+        [self setupDataWithGenre:self.genres andLimit:self.limit andOffset:self.offset];
         
         self.refreshControl = [[UIRefreshControl alloc] init];
         self.refreshControl.backgroundColor = [UIColor purpleColor];
@@ -63,7 +67,7 @@
 
 - (void)getLatest {
     NSLog(@"pull to refresh...");
-    [self setupData:self.urlString];
+    [self setupDataWithGenre:self.genres andLimit:self.limit andOffset:self.offset];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -75,8 +79,8 @@
 /*
  get data(json). Parsing json to NSMutableArray
  */
-- (void)setupData:(NSString *)link {
-    [[SSCNetworkingManager shareInstance] getJsonDataWithURL:link success:^(NSDictionary *response) {
+- (void)setupDataWithGenre:(NSString *)genre andLimit:(NSInteger)limit andOffset:(NSInteger)offset {
+    [[SSCNetworkingManager shareInstance] getJsonDataWithGenre:genre andLimit:limit andOffset:offset success:^(NSDictionary *response) {
         //get all keys of response
         __weak typeof(self)weakself = self;
         NSArray *array = [response objectForKey:@"tracks"];
@@ -128,8 +132,9 @@
         }
         
         //getting next_link to use to load more
-        weakself.nextLink = [response objectForKey:@"next_href"];
-        
+//        weakself.nextLink = [response objectForKey:@"next_href"];
+//        weakself.offset += 50;
+        [weakself.tableView.infiniteScrollingView stopAnimating];
         [weakself formatData];
         [weakself.tableView reloadData];
     } failure:^(NSError *error) {
@@ -197,14 +202,13 @@
                       withCellType:0];
     
     cell.delegate = self;
-//    
-//    NSLog(@"%ld", indexPath.row);
-//    NSLog(@"%@", self.nextLink);
     
-    //load more items
-    if (indexPath.row + 1 == [self.songs count] && ![self.nextLink isEqual:[NSNull null]]) {
-        [self setupData:self.nextLink];
-    }
+    //load more items: using 
+    __weak typeof(self) weakself = self;
+    [tableView addInfiniteScrollingWithActionHandler:^{
+        weakself.offset = [weakself.songs count];
+        [weakself setupDataWithGenre:weakself.genres andLimit:weakself.limit andOffset:weakself.offset];
+    }];
     return cell;
 }
 

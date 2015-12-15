@@ -22,7 +22,8 @@
 }
 //http://www.raywenderlich.com/51127/nsurlsession-tutorial
 
-- (void)getJsonDataWithURL:(NSString *)urlString success:(void(^)(NSDictionary *response))success failure:(void(^)(NSError *error))failure {
+- (void)getJsonDataWithGenre:(NSString *)genre andLimit:(NSInteger)limit andOffset:(NSInteger)offset success:(void(^)(NSDictionary *response))success failure:(void(^)(NSError *error))failure {
+    NSString *urlString = [NSString stringWithFormat:@"https://api-v2.soundcloud.com/explore/%@?limit=%ld&offset=%ld", genre, limit, offset];
     NSURL *url = [NSURL URLWithString:urlString];
     
     NSURLSession *session = [NSURLSession sharedSession];
@@ -46,5 +47,4 @@
     }];
     [jsonData resume];
 }
-
 @end
