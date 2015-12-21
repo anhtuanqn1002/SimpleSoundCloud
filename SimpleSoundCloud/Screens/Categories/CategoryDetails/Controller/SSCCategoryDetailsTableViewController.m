@@ -29,7 +29,7 @@
 @implementation SSCCategoryDetailsTableViewController
 
 - (void)awakeFromNib {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeItem:) name:@"REMOVE_ITEM_TO_CATEGORY" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeItemFromSongsToCategoryDetails:) name:@"REMOVE_ITEM_TO_CATEGORY" object:nil];
 }
 
 - (void)viewDidLoad {
@@ -63,6 +63,13 @@
         [self.refreshControl addTarget:self action:@selector(getLatest) forControlEvents:UIControlEventValueChanged];
         
     }
+    //load more items: using SVInfiniteScrolling
+    __weak typeof(self) weakself = self;
+    [weakself.tableView addInfiniteScrollingWithActionHandler:^{
+        weakself.offset = [weakself.songs count];
+        [weakself setupDataWithGenre:weakself.genres andLimit:weakself.limit andOffset:weakself.offset];
+    }];
+
 }
 
 - (void)getLatest {
@@ -80,11 +87,12 @@
  get data(json). Parsing json to NSMutableArray
  */
 - (void)setupDataWithGenre:(NSString *)genre andLimit:(NSInteger)limit andOffset:(NSInteger)offset {
-    [[SSCNetworkingManager shareInstance] getJsonDataWithGenre:genre andLimit:limit andOffset:offset success:^(NSDictionary *response) {
+    NSString *url = [[SSCNetworkingManager shareInstance] getURLWithParameter:genre andParameter2:(NSInteger)limit andParameter3:offset andParameter4:@"Songs"];
+    [[SSCNetworkingManager shareInstance] getJsonDataWithURLString:url success:^(NSDictionary *response) {
         //get all keys of response
         __weak typeof(self)weakself = self;
         NSArray *array = [response objectForKey:@"tracks"];
-        //when loading progress is finishing, we need dismiss SVProgressHUD
+        //when loading progress finished, we need dismiss SVProgressHUD
         [SVProgressHUD dismissWithDelay:0.01f];
         for (NSInteger j = 0; j < [array count]; j++) {
             NSLog(@"%@", [array objectAtIndex:j]);
@@ -112,7 +120,7 @@
             } else {
                 track.likesCount = [[temp valueForKey:@"likes_count"] intValue];
             }
-            if ([[temp valueForKey:@"likes_count"] isEqual:[NSNull null]]) {
+            if ([[temp valueForKey:@"playback_count"] isEqual:[NSNull null]]) {
                 track.playbackCount = 0;
             } else {
                 track.playbackCount = [[temp valueForKey:@"playback_count"] intValue];
@@ -131,9 +139,7 @@
             [weakself.refreshControl endRefreshing];
         }
         
-        //getting next_link to use to load more
-//        weakself.nextLink = [response objectForKey:@"next_href"];
-//        weakself.offset += 50;
+        //stop load more when it finished
         [weakself.tableView.infiniteScrollingView stopAnimating];
         [weakself formatData];
         [weakself.tableView reloadData];
@@ -160,15 +166,13 @@
     NSLog(@"%ld - %ld", indexPath.section, indexPath.row);
     [[self.songs objectAtIndex:indexPath.row] setIsSelectedTrack:state];
     if (state) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"ADD_ITEM_TO_SONGS" object:[self.songs objectAtIndex:indexPath.row]];
-    } else {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"REMOVE_ITEM_TO_SONGS" object:[self.songs objectAtIndex:indexPath.row]];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"CATEGORYDETAILS_ADD_ITEM_TO_SONGS" object:[self.songs objectAtIndex:indexPath.row]];
     }
 }
 
-//removing from songs to category details
+#pragma mark - Removing from songs to category details
 
-- (void)removeItem:(NSNotification *)notification {
+- (void)removeItemFromSongsToCategoryDetails:(NSNotification *)notification {
     SSCTrackModel *track = notification.object;
     for (SSCTrackModel *temp in self.songs){
         if ([temp.ID isEqual:track.ID]) {
@@ -203,12 +207,6 @@
     
     cell.delegate = self;
     
-    //load more items: using 
-    __weak typeof(self) weakself = self;
-    [tableView addInfiniteScrollingWithActionHandler:^{
-        weakself.offset = [weakself.songs count];
-        [weakself setupDataWithGenre:weakself.genres andLimit:weakself.limit andOffset:weakself.offset];
-    }];
     return cell;
 }
 

@@ -60,6 +60,7 @@
 
 - (NSMutableArray *)getListTrack:(NSString *)table isUseType:(BOOL)isType withColumn:(NSString *)column andValue:(NSString *)value {
     NSString *sql = [NSString stringWithFormat:@"Select * from %@", table];
+    
     if (isType) {
         sql = [NSString stringWithFormat:@"Select * from %@ where %@ = '%@'", table, column, value];
     }

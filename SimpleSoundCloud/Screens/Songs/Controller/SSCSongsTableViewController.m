@@ -27,8 +27,9 @@
     self.songs = [[NSMutableArray alloc] init];
     self.songs = [[SSCDatabaseManager shareInstance] getListTrack:@"Songs" isUseType:NO withColumn:nil andValue:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addItem:) name:@"ADD_ITEM_TO_SONGS" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeItem:) name:@"REMOVE_ITEM_TO_SONGS" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addItemFromCategoryDetais:) name:@"CATEGORYDETAILS_ADD_ITEM_TO_SONGS" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addItemFromSearch:) name:@"SEARCH_ADD_ITEM_TO_SONGS" object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeItem:) name:@"REMOVE_ITEM_TO_SONGS" object:nil];
     [self.tableView registerNib:[UINib nibWithNibName:@"SSCCategoryDetailsTableViewCell" bundle:nil] forCellReuseIdentifier:@"SSCCategoryDetailsTableViewCell"];
     [self updateData];
 }
@@ -51,29 +52,40 @@
     [self.tableView reloadData];
 }
 
-#pragma mark - Add and remove items from Category
+#pragma mark - Add items from Category and Search
 
-- (void)addItem:(NSNotification *)notification {
+- (void)addItemFromCategoryDetais:(NSNotification *)notification {
     SSCTrackModel *track = notification.object;
     [self.songs addObject:track];
     [self updateData];
     if ([[SSCDatabaseManager shareInstance] insertRowOfTable:@"Songs" withModel:track]) {
-        NSLog(@"Insert a row is success");
+        NSLog(@"Adding item from category details is success");
     } else {
-        NSLog(@"Insert a row is failed");
+        NSLog(@"Adding item from category details failed");
     }
 }
 
-- (void)removeItem:(NSNotification *)notification {
+- (void)addItemFromSearch:(NSNotification *)notification {
     SSCTrackModel *track = notification.object;
-    [self.songs removeObject:track];
+    [self.songs addObject:track];
     [self updateData];
-    if ([[SSCDatabaseManager shareInstance] deleteRowOfTable:@"Songs" withModel:track]) {
-        NSLog(@"Delete a row is success");
+    if ([[SSCDatabaseManager shareInstance] insertRowOfTable:@"Songs" withModel:track]) {
+        NSLog(@"Adding item from search is success");
     } else {
-        NSLog(@"Delete a row is failed");
+        NSLog(@"Adding item from search failed");
     }
 }
+
+//- (void)removeItem:(NSNotification *)notification {
+//    SSCTrackModel *track = notification.object;
+//    [self.songs removeObject:track];
+//    [self updateData];
+//    if ([[SSCDatabaseManager shareInstance] deleteRowOfTable:@"Songs" withModel:track]) {
+//        NSLog(@"Delete a row is success");
+//    } else {
+//        NSLog(@"Delete a row is failed");
+//    }
+//}
 
 #pragma mark - Table data source
 
@@ -102,6 +114,7 @@
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         //push notification from song to category
         [[NSNotificationCenter defaultCenter] postNotificationName:@"REMOVE_ITEM_TO_CATEGORY" object:[self.songs objectAtIndex:indexPath.row]];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"REMOVE_ITEM_TO_SEARCH" object:[self.songs objectAtIndex:indexPath.row]];
         SSCTrackModel *track = [self.songs objectAtIndex:indexPath.row];
         [self.songs removeObject:track];
         [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];

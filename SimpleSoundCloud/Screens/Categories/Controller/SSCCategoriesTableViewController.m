@@ -58,7 +58,8 @@
 - (void)setupData {
 //    NSString *urlString = @"https://api-v2.soundcloud.com/explore/categories";
     __weak typeof(self) self_weak = self;
-    [[SSCNetworkingManager shareInstance] getJsonDataWithGenre:@"categories" andLimit:0 andOffset:0 success:^(NSDictionary *responseDict) {
+    NSString *url = [[SSCNetworkingManager shareInstance] getURLWithParameter:@"categories" andParameter2:0 andParameter3:0 andParameter4:@"Category"];
+    [[SSCNetworkingManager shareInstance] getJsonDataWithURLString:url success:^(NSDictionary *responseDict) {
         //code
         self_weak.categories = responseDict;
         [self_weak.tableView reloadData];
