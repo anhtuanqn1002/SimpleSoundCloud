@@ -26,6 +26,7 @@
 @property (weak, nonatomic) IBOutlet UIView *viewShadowForSuggestTableView;
 @property (assign, nonatomic) NSInteger offset;
 @property (assign, nonatomic) NSInteger limit;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *heightConstraintForSuggestTableView;
 
 @end
 
@@ -55,7 +56,7 @@
     }];
 //    [self setShadowForTableView:self.suggestTableView withColor:[UIColor grayColor] andOffset:CGSizeMake(0, 3) andRadius:4 andOpacity:1 andCornerRadius:4];
     //set shadow for suggest tableview
-    self.viewShadowForSuggestTableView.layer.cornerRadius = 5.0;
+    self.suggestTableView.layer.cornerRadius = 5.0;
     // add shadow
 //    self.viewShadowForSuggestTableView.backgroundColor = [UIColor redColor];
     self.viewShadowForSuggestTableView.layer.shadowOffset = CGSizeMake(0, 10);
@@ -116,6 +117,14 @@
         }
         [cell setBackgroundColor:[UIColor clearColor]];
         cell.textLabel.text = [self.suggestSearchResults objectAtIndex:indexPath.row];
+        if ([self.suggestSearchResults count] < 6) {
+            //set auto constraint
+            //because height of suggest tableview and viewShadow follow this constraint
+            self.heightConstraintForSuggestTableView.constant = [self.suggestSearchResults count]*30;
+        } else {
+            //set auto constraint
+            self.heightConstraintForSuggestTableView.constant = 200;
+        }
         return cell;
     } else {
         SSCCategoryDetailsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SSCCategoryDetailsTableViewCell" forIndexPath:indexPath];
@@ -133,6 +142,8 @@
         //hidden viewShadow = hidden suggestTableView
         if (self.viewShadowForSuggestTableView != nil) {
             self.viewShadowForSuggestTableView.hidden = YES;
+            [self.searchBar setShowsCancelButton:NO animated:YES];
+            [self.searchBar endEditing:YES];
         }
         
         return cell;
