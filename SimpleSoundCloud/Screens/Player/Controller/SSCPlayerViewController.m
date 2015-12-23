@@ -49,12 +49,14 @@
     
     [self.view addSubview:self.playerBar.view];
     
-    self.playerBar.view.frame = CGRectMake(0, 400, 500, 200);
-    NSLayoutConstraint *barLeftConstraint = [NSLayoutConstraint constraintWithItem:self.playerBar.view attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeft multiplier:1.0f constant:0.0f];
-    NSLayoutConstraint *barBottomConstraint = [NSLayoutConstraint constraintWithItem:self.playerBar.view attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1.0f constant:0.0f];
-    NSLayoutConstraint *barTopConstraint = [NSLayoutConstraint constraintWithItem:self.playerBar.view attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.playerSlider attribute: NSLayoutAttributeTop multiplier:1.0f constant:0.0f];
-    NSLayoutConstraint *barRightConstraint = [NSLayoutConstraint constraintWithItem:self.playerBar.view attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.view attribute: NSLayoutAttributeRight multiplier:1.0f constant:0.0f];
+    playerBar.view.translatesAutoresizingMaskIntoConstraints = NO;
     
+    NSLayoutConstraint *barLeftConstraint = [NSLayoutConstraint constraintWithItem:playerBar.view attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeft multiplier:1.0f constant:0.0f];
+    NSLayoutConstraint *barBottomConstraint = [NSLayoutConstraint constraintWithItem:playerBar.view attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1.0f constant:0.0f];
+    NSLayoutConstraint *barTopConstraint = [NSLayoutConstraint constraintWithItem:playerBar.view attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.playerSlider attribute: NSLayoutAttributeTop multiplier:1.0f constant:0.0f];
+    NSLayoutConstraint *barRightConstraint = [NSLayoutConstraint constraintWithItem:playerBar.view attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.view attribute: NSLayoutAttributeRight multiplier:1.0f constant:0.0f];
+    
+    [NSLayoutConstraint activateConstraints:@[barLeftConstraint, barBottomConstraint, barTopConstraint, barRightConstraint]];
     barRightConstraint.active = YES;
     barLeftConstraint.active = YES;
     barBottomConstraint.active = YES;
