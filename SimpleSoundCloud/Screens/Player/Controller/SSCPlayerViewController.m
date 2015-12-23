@@ -14,9 +14,9 @@
 
 @property (strong, nonatomic) AVAudioPlayer *playerControl;
 
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *dropPlayerButton;
 @property (weak, nonatomic) IBOutlet UIImageView *avatarPlayer;
 @property (weak, nonatomic) IBOutlet UISlider *playerSlider;
+@property (strong, nonatomic) SSCPlayerBarViewController *playerBar;
 
 @end
 
@@ -34,20 +34,26 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+//---------------------------------------------------------------
+//    Create navigation controller for self
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:self];
+    navigationController.navigationItem.title = @"AVC";
+//---------------------------------------------------------------
+    
     NSString *urlString = [NSString stringWithFormat:@"%@/TimEmDemGiangSinh.mp3",[[NSBundle mainBundle] resourcePath]];
     NSURL *url = [NSURL fileURLWithPath:urlString];
     self.playerControl = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:nil];
     self.playerControl.volume = 0.8;
     
-    SSCPlayerBarViewController *playerBar = [[SSCPlayerBarViewController alloc] initWithNibName:@"SSCPlayerBarViewController" bundle:nil];
+    self.playerBar = [[SSCPlayerBarViewController alloc] initWithNibName:@"SSCPlayerBarViewController" bundle:nil];
     
-    [self.view addSubview:playerBar.view];
+    [self.view addSubview:self.playerBar.view];
     
-//    playerBar.view.frame = CGRectMake(0, 400, 600, 200);
-    NSLayoutConstraint *barLeftConstraint = [NSLayoutConstraint constraintWithItem:playerBar.view attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeft multiplier:1.0f constant:0.0f];
-    NSLayoutConstraint *barBottomConstraint = [NSLayoutConstraint constraintWithItem:playerBar.view attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1.0f constant:0.0f];
-    NSLayoutConstraint *barTopConstraint = [NSLayoutConstraint constraintWithItem:playerBar.view attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.avatarPlayer attribute: NSLayoutAttributeBottom multiplier:1.0f constant:0.0f];
-    NSLayoutConstraint *barRightConstraint = [NSLayoutConstraint constraintWithItem:playerBar.view attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.view attribute: NSLayoutAttributeRight multiplier:1.0f constant:0.0f];
+    self.playerBar.view.frame = CGRectMake(0, 400, 500, 200);
+    NSLayoutConstraint *barLeftConstraint = [NSLayoutConstraint constraintWithItem:self.playerBar.view attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeft multiplier:1.0f constant:0.0f];
+    NSLayoutConstraint *barBottomConstraint = [NSLayoutConstraint constraintWithItem:self.playerBar.view attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1.0f constant:0.0f];
+    NSLayoutConstraint *barTopConstraint = [NSLayoutConstraint constraintWithItem:self.playerBar.view attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.playerSlider attribute: NSLayoutAttributeTop multiplier:1.0f constant:0.0f];
+    NSLayoutConstraint *barRightConstraint = [NSLayoutConstraint constraintWithItem:self.playerBar.view attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.view attribute: NSLayoutAttributeRight multiplier:1.0f constant:0.0f];
     
     barRightConstraint.active = YES;
     barLeftConstraint.active = YES;
