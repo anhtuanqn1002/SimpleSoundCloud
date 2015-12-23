@@ -17,5 +17,6 @@
 @property (nonatomic, assign) NSInteger playbackCount;
 @property (nonatomic, assign) BOOL isSelectedTrack;
 @property (nonatomic, strong) NSString *genre;
+@property (nonatomic, strong) NSString *streamURL;
 
 @end

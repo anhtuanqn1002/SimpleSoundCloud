@@ -41,7 +41,7 @@
         //opening the database
         [self.db open];
         
-        NSString *sql = @"CREATE TABLE IF NOT EXISTS Songs (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, idTrack TEXT DEFAULT NULL, trackTitle TEXT DEFAULT NULL, artworkURL TEXT DEFAULT NULL, likesCount INTEGER DEFAULT 0, playbackCount INTEGER DEFAULT 0, isSelectedTrack INTEGER DEFAULT 0, genre TEXT DEFAULT NULL)";
+        NSString *sql = @"CREATE TABLE IF NOT EXISTS Songs (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, idTrack TEXT DEFAULT NULL, trackTitle TEXT DEFAULT NULL, artworkURL TEXT DEFAULT NULL, likesCount INTEGER DEFAULT 0, playbackCount INTEGER DEFAULT 0, isSelectedTrack INTEGER DEFAULT 0, genre TEXT DEFAULT NULL, streamurl TEXT DEFAULT NULL)";
         //create a table to database
         BOOL result = [self.db executeUpdate:sql];
         
@@ -81,10 +81,8 @@
             trackmodel.isSelectedTrack = YES;
         }
         trackmodel.genre = [result stringForColumn:@"genre"];
-        
-        NSLog(@"%@", trackmodel.ID);
-        NSLog(@"%@", trackmodel.trackTitle);
-        NSLog(@"%ld", selected);
+        trackmodel.streamURL = [result stringForColumn:@"streamurl"];
+
         [temp addObject:trackmodel];
     }
     
@@ -97,7 +95,7 @@
     if (!model.isSelectedTrack) {
         selected = 0;
     }
-    NSString *sql = [NSString stringWithFormat:@"INSERT INTO %@ (idTrack, trackTitle, artworkURL, likesCount, playbackCount, isSelectedTrack, genre) VALUES ('%@','%@', '%@', %ld, %ld, %ld, '%@')", table, model.ID, model.trackTitle, model.artworkURL, model.likesCount, model.playbackCount, selected, model.genre];
+    NSString *sql = [NSString stringWithFormat:@"INSERT INTO %@ (idTrack, trackTitle, artworkURL, likesCount, playbackCount, isSelectedTrack, genre, streamurl) VALUES ('%@','%@', '%@', %ld, %ld, %ld, '%@', '%@')", table, model.ID, model.trackTitle, model.artworkURL, model.likesCount, model.playbackCount, selected, model.genre, model.streamURL];
     [self.db open];
     BOOL result = [self.db executeUpdate:sql];
     [self.db close];
@@ -109,7 +107,7 @@
     if (!model.isSelectedTrack) {
         selected = 0;
     }
-    NSString *sql = [NSString stringWithFormat:@"UPDATE '%@' set trackTitle = '%@', artworkURL = '%@', likesCount = %ld, playbackCount = %ld, isSelectedTrack = %ld, genre = '%@' where id = '%@'", table, model.trackTitle, model.artworkURL, model.likesCount, model.playbackCount, selected, model.ID, model.genre];
+    NSString *sql = [NSString stringWithFormat:@"UPDATE '%@' set trackTitle = '%@', artworkURL = '%@', likesCount = %ld, playbackCount = %ld, isSelectedTrack = %ld, genre = '%@', streamurl = '%@' where id = '%@'", table, model.trackTitle, model.artworkURL, model.likesCount, model.playbackCount, selected, model.ID, model.genre, model.streamURL];
     [self.db open];
     BOOL result = [self.db executeUpdate:sql];
     [self.db close];

@@ -11,6 +11,8 @@
 #import "SSCCategoryDetailsTableViewCell.h"
 #import "SSCTrackModel.h"
 #import "SSCDatabaseManager.h"
+#import "SSCPlayerViewController.h"
+#import "AppDelegate.h"
 
 @interface SSCSongsTableViewController ()
 
@@ -29,7 +31,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addItemFromCategoryDetais:) name:@"CATEGORYDETAILS_ADD_ITEM_TO_SONGS" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addItemFromSearch:) name:@"SEARCH_ADD_ITEM_TO_SONGS" object:nil];
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeItem:) name:@"REMOVE_ITEM_TO_SONGS" object:nil];
+
     [self.tableView registerNib:[UINib nibWithNibName:@"SSCCategoryDetailsTableViewCell" bundle:nil] forCellReuseIdentifier:@"SSCCategoryDetailsTableViewCell"];
     [self updateData];
 }
@@ -76,17 +78,6 @@
     }
 }
 
-//- (void)removeItem:(NSNotification *)notification {
-//    SSCTrackModel *track = notification.object;
-//    [self.songs removeObject:track];
-//    [self updateData];
-//    if ([[SSCDatabaseManager shareInstance] deleteRowOfTable:@"Songs" withModel:track]) {
-//        NSLog(@"Delete a row is success");
-//    } else {
-//        NSLog(@"Delete a row is failed");
-//    }
-//}
-
 #pragma mark - Table data source
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -106,7 +97,10 @@
     return cell;
 }
 
+#pragma mark - Tableview delegate
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self presentViewController:[SSCPlayerViewController shareInstance] animated:YES completion:nil];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 

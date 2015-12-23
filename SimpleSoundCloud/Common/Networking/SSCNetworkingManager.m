@@ -18,6 +18,8 @@
 
 @implementation SSCNetworkingManager
 
+#pragma mark - ShareInstance
+
 + (instancetype)shareInstance {
     static SSCNetworkingManager *networkingManager = nil;
     static dispatch_once_t onceToken;
@@ -26,21 +28,21 @@
     });
     return networkingManager;
 }
-//http://www.raywenderlich.com/51127/nsurlsession-tutorial
 
-- (void)getJsonDataWithURLString:(NSString *)urlString success:(void(^)(NSDictionary *response))success failure:(void(^)(NSError *error))failure {
+#pragma mark - Get data for Category
+
+- (void)getJsonDataWithGenre:(NSString *)genre success:(void(^)(NSDictionary *response))success failure:(void(^)(NSError *error))failure {
+    NSString *urlString = [NSString stringWithFormat:@"https://api-v2.soundcloud.com/explore/%@", genre];
     NSURL *url = [NSURL URLWithString:urlString];
     
     NSURLSession *session = [NSURLSession sharedSession];
     NSURLSessionDataTask *jsonData = [session dataTaskWithURL:url completionHandler:^(NSData *data,
-                                                      NSURLResponse *response,
-                                                      NSError *error) {
+                                                                                      NSURLResponse *response,
+                                                                                      NSError *error) {
         if (error) {
             failure(error);
             return;
         }
-        
-//        NSLog(@"%@", data);
         NSDictionary *dictionary;
         dictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
         
@@ -53,18 +55,80 @@
     [jsonData resume];
 }
 
-- (NSString *)getURLWithParameter:(id)param1 andParameter2:(NSInteger)param2 andParameter3:(NSInteger)param3 andParameter4:(id)param4 {
-    NSString *url = @"";
-    if ([param4 isEqualToString:@"Category"]) {
-        url = [NSString stringWithFormat:@"https://api-v2.soundcloud.com/explore/%@",param1];
-    } else if ([param4 isEqualToString:@"Songs"]) {
-        url = [NSString stringWithFormat:@"https://api-v2.soundcloud.com/explore/%@?limit=%ld&offset=%ld", param1, param2, param3];
-    } else if ([param4 isEqualToString:@"SuggestSearch"]) {
-        url = [NSString stringWithFormat:@"http://suggestqueries.google.com/complete/search?q=%@&ds=yt&client=firefox&hjson=t&cp=3", param1];
-    } else if ([param4 isEqualToString:@"Search"]) {
-        url = [NSString stringWithFormat:@"https://api-v2.soundcloud.com/search?q=%@&limit=%ld&offset=%ld", param1, param2, param3];
-    }
-    return url;
+#pragma mark - Get data for Category details
+
+- (void)getJsonDataWithGenre:(NSString *)genre andLimit:(NSInteger)limit andOffset:(NSInteger)offset success:(void(^)(NSArray *response))success failure:(void(^)(NSError *error))failure {
+    NSString *urlString = [NSString stringWithFormat:@"https://api-v2.soundcloud.com/explore/%@?limit=%ld&offset=%ld", genre, limit, offset];
+    
+    NSURL *url = [NSURL URLWithString:urlString];
+    
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSURLSessionDataTask *jsonData = [session dataTaskWithURL:url completionHandler:^(NSData *data,
+                                                      NSURLResponse *response,
+                                                      NSError *error) {
+        if (error) {
+            failure(error);
+            return;
+        }
+        NSDictionary *dictionary;
+        dictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+        
+        NSArray *array = [dictionary objectForKey:@"tracks"];
+        NSMutableArray *results = [[NSMutableArray alloc] init];
+        for (NSInteger j = 0; j < [array count]; j++) {
+            NSLog(@"%@", [array objectAtIndex:j]);
+            NSDictionary *temp = [array objectAtIndex:j];
+            NSLog(@"%@", temp);
+            //id artwork_url title likes_count playback_count
+            SSCTrackModel *track = [[SSCTrackModel alloc] init];
+            
+            if ([[temp valueForKey:@"id"] isEqual:[NSNull null]]) {
+                NSLog(@"ID is equal null --> Error!");
+            } else {
+                track.ID = [[temp valueForKey:@"id"] stringValue];
+            }
+            
+            if ([[temp valueForKey:@"title"] isEqual:[NSNull null]]) {
+                track.trackTitle = @"";
+            } else {
+                track.trackTitle = [temp valueForKey:@"title"];
+            }
+            
+            if ([[temp valueForKey:@"artwork_url"] isEqual:[NSNull null]]) {
+                track.artworkURL = @"";
+            } else {
+                track.artworkURL = [temp valueForKey:@"artwork_url"];
+            }
+            
+            if ([[temp valueForKey:@"likes_count"] isEqual:[NSNull null]]) {
+                track.likesCount = 0;
+            } else {
+                track.likesCount = [[temp valueForKey:@"likes_count"] intValue];
+            }
+            
+            if ([[temp valueForKey:@"playback_count"] isEqual:[NSNull null]]) {
+                track.playbackCount = 0;
+            } else {
+                track.playbackCount = [[temp valueForKey:@"playback_count"] intValue];
+            }
+            
+            if ([[temp valueForKey:@"stream_url"] isEqual:[NSNull null]]) {
+                track.streamURL = @"";
+            } else {
+                track.streamURL = [temp valueForKey:@"stream_url"];
+            }
+            
+            track.genre = genre;
+            [results addObject:track];
+        }
+        
+        NSLog(@"%@", dictionary);
+        //moving block to MAIN THREAD --> update view
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            success(results);
+        }];
+    }];
+    [jsonData resume];
 }
 
 #pragma mark - Get data for suggest
@@ -155,7 +219,15 @@
             } else {
                 track.playbackCount = [[temp valueForKey:@"playback_count"] intValue];
             }
+            
             track.genre = @"Search";
+            
+            if ([[temp valueForKey:@"stream_url"] isEqual:[NSNull null]]) {
+                track.streamURL = @"";
+            } else {
+                track.streamURL = [temp valueForKey:@"stream_url"];
+            }
+            
             [jsonDataArray addObject:track];
         }
 

@@ -87,48 +87,12 @@
  get data(json). Parsing json to NSMutableArray
  */
 - (void)setupDataWithGenre:(NSString *)genre andLimit:(NSInteger)limit andOffset:(NSInteger)offset {
-    NSString *url = [[SSCNetworkingManager shareInstance] getURLWithParameter:genre andParameter2:(NSInteger)limit andParameter3:offset andParameter4:@"Songs"];
-    [[SSCNetworkingManager shareInstance] getJsonDataWithURLString:url success:^(NSDictionary *response) {
-        //get all keys of response
+    [[SSCNetworkingManager shareInstance] getJsonDataWithGenre:genre andLimit:limit andOffset:offset success:^(NSArray *response) {
         __weak typeof(self)weakself = self;
-        NSArray *array = [response objectForKey:@"tracks"];
         //when loading progress finished, we need dismiss SVProgressHUD
         [SVProgressHUD dismissWithDelay:0.01f];
-        for (NSInteger j = 0; j < [array count]; j++) {
-            NSLog(@"%@", [array objectAtIndex:j]);
-            NSDictionary *temp = [array objectAtIndex:j];
-            NSLog(@"%@", temp);
-            //id artwork_url title likes_count playback_count
-            SSCTrackModel *track = [[SSCTrackModel alloc] init];
-            if ([[temp valueForKey:@"id"] isEqual:[NSNull null]]) {
-                NSLog(@"ID is equal null --> Error!");
-            } else {
-                track.ID = [[temp valueForKey:@"id"] stringValue];
-            }
-            if ([[temp valueForKey:@"title"] isEqual:[NSNull null]]) {
-                track.trackTitle = @"";
-            } else {
-                track.trackTitle = [temp valueForKey:@"title"];
-            }
-            if ([[temp valueForKey:@"artwork_url"] isEqual:[NSNull null]]) {
-                track.artworkURL = @"";
-            } else {
-                track.artworkURL = [temp valueForKey:@"artwork_url"];
-            }
-            if ([[temp valueForKey:@"likes_count"] isEqual:[NSNull null]]) {
-                track.likesCount = 0;
-            } else {
-                track.likesCount = [[temp valueForKey:@"likes_count"] intValue];
-            }
-            if ([[temp valueForKey:@"playback_count"] isEqual:[NSNull null]]) {
-                track.playbackCount = 0;
-            } else {
-                track.playbackCount = [[temp valueForKey:@"playback_count"] intValue];
-            }
-            track.genre = weakself.genres;
-            [weakself.songs addObject:track];
-        }
-        
+        //get data
+        [weakself.songs addObjectsFromArray:response];
         if (weakself.refreshControl) {
             NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
             [formatter setDateFormat:@"MMM d, h:mm a"];

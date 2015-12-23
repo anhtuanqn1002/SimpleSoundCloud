@@ -55,9 +55,9 @@
         [weakself getDataSearchWithKeyword:weakself.searchBar.text andLimit:weakself.limit andOffset:weakself.offset];
     }];
 //    [self setShadowForTableView:self.suggestTableView withColor:[UIColor grayColor] andOffset:CGSizeMake(0, 3) andRadius:4 andOpacity:1 andCornerRadius:4];
-    //set shadow for suggest tableview
+//    set shadow for suggest tableview
     self.suggestTableView.layer.cornerRadius = 5.0;
-    // add shadow
+//     add shadow
 //    self.viewShadowForSuggestTableView.backgroundColor = [UIColor redColor];
     self.viewShadowForSuggestTableView.layer.shadowOffset = CGSizeMake(0, 10);
     self.viewShadowForSuggestTableView.layer.shadowRadius = 5.0;
@@ -192,7 +192,7 @@
     if (self.offset == 0) {
         [SVProgressHUD showWithStatus:@"Searching..."];
     }
-    [[SSCNetworkingManager shareInstance] getJsonDataSearchWithKeyword:keyword andLimit:limit andOffset:offset success:^(NSArray *response){
+    [[SSCNetworkingManager shareInstance] getJsonDataSearchWithKeyword:keyword andLimit:limit andOffset:offset success:^(NSArray *response) {
         [weakself.searchResults addObjectsFromArray:response];
         //stop loading
         [SVProgressHUD dismiss];
@@ -200,7 +200,7 @@
         [weakself.tableView.infiniteScrollingView stopAnimating];
         [weakself formatData];
         [weakself.tableView reloadData];
-    }failure:^(NSError *error){
+    } failure:^(NSError *error) {
         NSLog(@"%@", error);
         if (error.code == -1002) {
             NSLog(@"No results");
@@ -217,7 +217,9 @@
     __weak typeof (self) weakself = self;
     [[SSCNetworkingManager shareInstance] getSuggestDataUseGoogleAPIWithKeyword:searchText success:^(NSArray *response){
         weakself.suggestSearchResults = response;
-        
+        if ([response count] == 0) {
+            weakself.viewShadowForSuggestTableView.hidden = YES;
+        }
         [weakself.suggestTableView reloadData];
     }failure:^(NSError *error){
         NSLog(@"%@", error);

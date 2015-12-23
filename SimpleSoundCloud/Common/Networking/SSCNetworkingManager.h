@@ -12,9 +12,9 @@
 
 + (instancetype)shareInstance;
 
-- (void)getJsonDataWithURLString:(NSString *)urlString success:(void(^)(NSDictionary *response))success failure:(void(^)(NSError *error))failure;
+- (void)getJsonDataWithGenre:(NSString *)genre success:(void(^)(NSDictionary *response))success failure:(void(^)(NSError *error))failure;
 
-- (NSString *)getURLWithParameter:(id)param1 andParameter2:(NSInteger)param2 andParameter3:(NSInteger)param3 andParameter4:(id)param4;
+- (void)getJsonDataWithGenre:(NSString *)genre andLimit:(NSInteger)limit andOffset:(NSInteger)offset success:(void(^)(NSArray *response))success failure:(void(^)(NSError *error))failure;
 
 - (void)getSuggestDataUseGoogleAPIWithKeyword:(NSString *)keyword success:(void(^)(NSArray *response))success failure:(void(^)(NSError *error))failure;
 

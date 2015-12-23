@@ -14,7 +14,6 @@
 @interface SSCCategoriesTableViewController ()
 
 @property (nonatomic, strong) NSDictionary *categories;
-//@property (nonatomic, strong) UIRefreshControl *refreshControl;
 
 @end
 
@@ -58,10 +57,8 @@
 - (void)setupData {
 //    NSString *urlString = @"https://api-v2.soundcloud.com/explore/categories";
     __weak typeof(self) self_weak = self;
-    NSString *url = [[SSCNetworkingManager shareInstance] getURLWithParameter:@"categories" andParameter2:0 andParameter3:0 andParameter4:@"Category"];
-    [[SSCNetworkingManager shareInstance] getJsonDataWithURLString:url success:^(NSDictionary *responseDict) {
-        //code
-        self_weak.categories = responseDict;
+    [[SSCNetworkingManager shareInstance] getJsonDataWithGenre:@"categories" success:^(NSDictionary *response) {
+        self_weak.categories = response;
         [self_weak.tableView reloadData];
         //dimiss SVProgressHUD
         [SVProgressHUD dismissWithDelay:0.0f];
