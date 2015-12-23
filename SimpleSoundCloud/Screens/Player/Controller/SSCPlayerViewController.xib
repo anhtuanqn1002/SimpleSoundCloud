@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
@@ -8,7 +8,6 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SSCPlayerViewController">
             <connections>
                 <outlet property="avatarPlayer" destination="lhM-3d-PxM" id="N54-iC-bAo"/>
-                <outlet property="dropPlayerButton" destination="Y2t-lE-LhG" id="cyR-eO-Pzb"/>
                 <outlet property="playerSlider" destination="xHg-d6-hRP" id="lRa-Zg-HXX"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -18,26 +17,14 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oyn-Vn-1eN">
-                    <rect key="frame" x="0.0" y="20" width="600" height="44"/>
-                    <items>
-                        <navigationItem title="Now playing" id="PUI-Sn-EGt">
-                            <barButtonItem key="leftBarButtonItem" systemItem="action" id="Y2t-lE-LhG">
-                                <connections>
-                                    <action selector="clickDropPlayerButton:" destination="-1" id="OH3-H8-9y5"/>
-                                </connections>
-                            </barButtonItem>
-                        </navigationItem>
-                    </items>
-                </navigationBar>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="lhM-3d-PxM">
-                    <rect key="frame" x="0.0" y="64" width="600" height="300"/>
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="300"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="300" id="jaN-Kl-yty"/>
                     </constraints>
                 </imageView>
                 <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="xHg-d6-hRP">
-                    <rect key="frame" x="8" y="374" width="584" height="31"/>
+                    <rect key="frame" x="8" y="301" width="584" height="31"/>
                     <color key="minimumTrackTintColor" red="0.9589974832" green="0.110082844" blue="0.13517197989999999" alpha="1" colorSpace="calibratedRGB"/>
                     <color key="maximumTrackTintColor" red="0.36862745099999999" green="0.71372549019999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <color key="thumbTintColor" red="0.30980392159999998" green="0.64705882349999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -46,13 +33,10 @@
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="lhM-3d-PxM" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="9yR-94-EwV"/>
-                <constraint firstItem="oyn-Vn-1eN" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="AvR-Pt-kdb"/>
-                <constraint firstItem="oyn-Vn-1eN" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="20" id="Oqs-R7-cim"/>
                 <constraint firstItem="xHg-d6-hRP" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="10" id="Sde-tR-1q4"/>
-                <constraint firstItem="xHg-d6-hRP" firstAttribute="top" secondItem="lhM-3d-PxM" secondAttribute="bottom" constant="10" id="ao8-Ff-scf"/>
-                <constraint firstItem="lhM-3d-PxM" firstAttribute="top" secondItem="oyn-Vn-1eN" secondAttribute="bottom" id="i5Q-Ri-hNy"/>
+                <constraint firstItem="xHg-d6-hRP" firstAttribute="top" secondItem="lhM-3d-PxM" secondAttribute="bottom" constant="1" id="dz3-dM-Lqh"/>
                 <constraint firstAttribute="trailing" secondItem="xHg-d6-hRP" secondAttribute="trailing" constant="10" id="jZU-M1-RLu"/>
-                <constraint firstAttribute="trailing" secondItem="oyn-Vn-1eN" secondAttribute="trailing" id="qfI-VK-HGv"/>
+                <constraint firstItem="lhM-3d-PxM" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="quL-If-VdE"/>
                 <constraint firstAttribute="trailing" secondItem="lhM-3d-PxM" secondAttribute="trailing" id="wiv-L5-pG7"/>
             </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
