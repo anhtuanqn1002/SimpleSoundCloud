@@ -43,45 +43,17 @@
     
     [self.view addSubview:playerBar.view];
     
-    playerBar.view.frame = CGRectMake(0, 400, 800, 200);
-    NSLayoutConstraint *leftBarXConstraint = [NSLayoutConstraint constraintWithItem:playerBar.view attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeft multiplier:0.5f constant:10.0f];
-    NSLayoutConstraint *leftBarYConstraint = [NSLayoutConstraint constraintWithItem:playerBar.view attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1.0f constant:-20.0f];
-//    NSLayoutConstraint *leftBarTopConstraint = [NSLayoutConstraint constraintWithItem:playerBar.view attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.playerSlider attribute: NSLayoutAttributeTop multiplier:1.0f constant:-30.0f];
+//    playerBar.view.frame = CGRectMake(0, 400, 600, 200);
+    NSLayoutConstraint *barLeftConstraint = [NSLayoutConstraint constraintWithItem:playerBar.view attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeft multiplier:1.0f constant:0.0f];
+    NSLayoutConstraint *barBottomConstraint = [NSLayoutConstraint constraintWithItem:playerBar.view attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1.0f constant:0.0f];
+    NSLayoutConstraint *barTopConstraint = [NSLayoutConstraint constraintWithItem:playerBar.view attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.avatarPlayer attribute: NSLayoutAttributeBottom multiplier:1.0f constant:0.0f];
+    NSLayoutConstraint *barRightConstraint = [NSLayoutConstraint constraintWithItem:playerBar.view attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.view attribute: NSLayoutAttributeRight multiplier:1.0f constant:0.0f];
     
-//    [playerBar.view addConstraint:[NSLayoutConstraint constraintWithItem:playerBar.view
-//                                                     attribute:NSLayoutAttributeWidth
-//                                                     relatedBy:NSLayoutRelationEqual
-//                                                        toItem:self.view
-//                                                     attribute:NSLayoutAttributeWidth
-//                                                    multiplier:0.5
-//                                                      constant:0]];
-//    [playerBar.view addConstraint:[NSLayoutConstraint constraintWithItem:playerBar.view
-//                                                     attribute:NSLayoutAttributeHeight
-//                                                     relatedBy:NSLayoutRelationEqual
-//                                                        toItem:self.view
-//                                                     attribute:NSLayoutAttributeHeight
-//                                                    multiplier:0.5
-//                                                      constant:0]];
-//    
-//    // Center horizontally
-//    [playerBar.view addConstraint:[NSLayoutConstraint constraintWithItem:playerBar.view
-//                                                     attribute:NSLayoutAttributeCenterX
-//                                                     relatedBy:NSLayoutRelationEqual
-//                                                        toItem:self.view
-//                                                     attribute:NSLayoutAttributeCenterX
-//                                                    multiplier:1.0
-//                                                      constant:0.0]];
-//    
-//    // Center vertically
-//    [playerBar.view addConstraint:[NSLayoutConstraint constraintWithItem:playerBar.view
-//                                                     attribute:NSLayoutAttributeCenterY
-//                                                     relatedBy:NSLayoutRelationEqual
-//                                                        toItem:self.view
-//                                                     attribute:NSLayoutAttributeCenterY
-//                                                    multiplier:1.0
-//                                                      constant:0.0]];
-//    [self.view setNeedsDisplay];
-    [self.view addConstraints:@[leftBarXConstraint, leftBarYConstraint]];
+    barRightConstraint.active = YES;
+    barLeftConstraint.active = YES;
+    barBottomConstraint.active = YES;
+    barTopConstraint.active = YES;
+//    [self.view addConstraints:@[leftBarXConstraint, leftBarYConstraint, leftBarTopConstraint, leftBarRightConstraint]];
 }
 
 - (void)didReceiveMemoryWarning {
