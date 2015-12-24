@@ -7,6 +7,11 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SSCPlayerBarViewController">
             <connections>
+                <outlet property="forwardButton" destination="M7q-jw-CIa" id="UF5-so-bjI"/>
+                <outlet property="loopButton" destination="W9N-h2-DMy" id="cPE-vl-bXF"/>
+                <outlet property="playButton" destination="YRc-IA-hJm" id="zEd-JP-epu"/>
+                <outlet property="rewardButton" destination="qZX-9A-trt" id="dHV-Bj-3Yy"/>
+                <outlet property="shuffleButton" destination="VSl-bB-wOQ" id="sdh-jF-6yn"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -15,21 +20,33 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VSl-bB-wOQ">
-                    <rect key="frame" x="143" y="285" width="46" height="30"/>
-                    <state key="normal" title="Button"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VSl-bB-wOQ">
+                    <rect key="frame" x="30" y="285" width="32" height="29"/>
+                    <state key="normal" image="shuffle.png"/>
+                    <connections>
+                        <action selector="clickShuffleButton:" destination="-1" eventType="touchUpInside" id="MrB-lZ-00p"/>
+                    </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qZX-9A-trt">
-                    <rect key="frame" x="209" y="285" width="46" height="30"/>
-                    <state key="normal" title="Button"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qZX-9A-trt">
+                    <rect key="frame" x="223" y="288" width="32" height="24"/>
+                    <state key="normal" image="rewind.png"/>
+                    <connections>
+                        <action selector="clickRewardButton:" destination="-1" eventType="touchUpInside" id="V34-f7-Anf"/>
+                    </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M7q-jw-CIa">
-                    <rect key="frame" x="345" y="285" width="46" height="30"/>
-                    <state key="normal" title="Button"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M7q-jw-CIa">
+                    <rect key="frame" x="345" y="288" width="32" height="24"/>
+                    <state key="normal" image="forward.png"/>
+                    <connections>
+                        <action selector="clickForwardButton:" destination="-1" eventType="touchUpInside" id="bcw-Wm-4U4"/>
+                    </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W9N-h2-DMy">
-                    <rect key="frame" x="411" y="285" width="46" height="30"/>
-                    <state key="normal" title="Button"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W9N-h2-DMy">
+                    <rect key="frame" x="538" y="287" width="32" height="26"/>
+                    <state key="normal" image="loop.png"/>
+                    <connections>
+                        <action selector="clickLoopButton:" destination="-1" eventType="touchUpInside" id="HYO-9V-eVF"/>
+                    </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YRc-IA-hJm">
                     <rect key="frame" x="275" y="275" width="50" height="50"/>
@@ -39,27 +56,34 @@
                     </constraints>
                     <state key="normal" image="play_stop_blue.png"/>
                     <state key="selected" image="pause_blue.png"/>
+                    <connections>
+                        <action selector="clickPlayButton:" destination="-1" eventType="touchUpInside" id="g78-iO-cb5"/>
+                    </connections>
                 </button>
             </subviews>
-            <color key="backgroundColor" red="0.9589974832" green="0.110082844" blue="0.13517197989999999" alpha="1" colorSpace="calibratedRGB"/>
+            <color key="backgroundColor" red="0.72941176470000002" green="0.73333333329999995" blue="0.74117647060000003" alpha="0.43208512929999998" colorSpace="calibratedRGB"/>
             <constraints>
-                <constraint firstItem="W9N-h2-DMy" firstAttribute="leading" secondItem="M7q-jw-CIa" secondAttribute="trailing" constant="20" id="3xf-7e-Sbv"/>
                 <constraint firstItem="YRc-IA-hJm" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="6fC-Kd-iH8"/>
+                <constraint firstAttribute="trailing" secondItem="W9N-h2-DMy" secondAttribute="trailing" constant="30" id="HJb-Fe-RCp"/>
                 <constraint firstItem="YRc-IA-hJm" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="IVi-hy-kOi"/>
                 <constraint firstItem="M7q-jw-CIa" firstAttribute="leading" secondItem="YRc-IA-hJm" secondAttribute="trailing" constant="20" id="JV8-iL-Clx"/>
+                <constraint firstItem="VSl-bB-wOQ" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="30" id="RGo-gd-sOs"/>
                 <constraint firstItem="W9N-h2-DMy" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="UIE-CU-cN7"/>
                 <constraint firstItem="VSl-bB-wOQ" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="X1q-d8-GGe"/>
                 <constraint firstItem="YRc-IA-hJm" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="alh-9U-zha"/>
                 <constraint firstItem="YRc-IA-hJm" firstAttribute="leading" secondItem="qZX-9A-trt" secondAttribute="trailing" constant="20" id="app-Nl-zTo"/>
                 <constraint firstItem="qZX-9A-trt" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="m3V-ZI-4d7"/>
-                <constraint firstItem="qZX-9A-trt" firstAttribute="leading" secondItem="VSl-bB-wOQ" secondAttribute="trailing" constant="20" id="p8z-aM-DBV"/>
                 <constraint firstItem="M7q-jw-CIa" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="r8s-v6-ZA5"/>
                 <constraint firstItem="YRc-IA-hJm" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="vpy-BT-dki"/>
             </constraints>
         </view>
     </objects>
     <resources>
+        <image name="forward.png" width="32" height="24"/>
+        <image name="loop.png" width="32" height="26"/>
         <image name="pause_blue.png" width="170" height="170"/>
         <image name="play_stop_blue.png" width="170" height="170"/>
+        <image name="rewind.png" width="32" height="24"/>
+        <image name="shuffle.png" width="32" height="29"/>
     </resources>
 </document>

@@ -9,15 +9,26 @@
 #import "SSCPlayerViewController.h"
 #import <AVFoundation/AVFoundation.h>
 #import "SSCPlayerBarViewController.h"
+#import "SSCTrackModel.h"
+
+#define CLIENT_ID @"e0d5195b63d3e78ad2422fa9871fe2b1"
 
 @interface SSCPlayerViewController ()
 
-@property (strong, nonatomic) AVAudioPlayer *playerControl;
+@property (strong, nonatomic) AVPlayer *playerControl;
 
 @property (weak, nonatomic) IBOutlet UIImageView *avatarPlayer;
 @property (weak, nonatomic) IBOutlet UISlider *playerSlider;
 @property (strong, nonatomic) SSCPlayerBarViewController *playerBar;
+@property (weak, nonatomic) IBOutlet UILabel *startLabel;
+@property (weak, nonatomic) IBOutlet UILabel *endLabel;
+@property (weak, nonatomic) IBOutlet UILabel *titleTrack;
 
+@property (weak, nonatomic) IBOutlet UIButton *playPauseButton;
+@property (weak, nonatomic) IBOutlet UIButton *shuffleButton;
+@property (weak, nonatomic) IBOutlet UIButton *forwardButton;
+@property (weak, nonatomic) IBOutlet UIButton *rewardButton;
+@property (weak, nonatomic) IBOutlet UIButton *loopButton;
 @end
 
 @implementation SSCPlayerViewController
@@ -34,44 +45,67 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-//---------------------------------------------------------------
-//    Create navigation controller for self
-    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:self];
-    navigationController.navigationItem.title = @"AVC";
-//---------------------------------------------------------------
     
-    NSString *urlString = [NSString stringWithFormat:@"%@/TimEmDemGiangSinh.mp3",[[NSBundle mainBundle] resourcePath]];
-    NSURL *url = [NSURL fileURLWithPath:urlString];
-    self.playerControl = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:nil];
-    self.playerControl.volume = 0.8;
+    //  -------------------------------------------
+    //    Add bar button
+    UIBarButtonItem *dropDownBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"menuFilled-100.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(dropDownBarButton:)];
+    self.navigationItem.leftBarButtonItem = dropDownBarButton;
+    //  -------------------------------------------
     
     self.playerBar = [[SSCPlayerBarViewController alloc] initWithNibName:@"SSCPlayerBarViewController" bundle:nil];
     
     [self.view addSubview:self.playerBar.view];
-    
-    playerBar.view.translatesAutoresizingMaskIntoConstraints = NO;
-    
-    NSLayoutConstraint *barLeftConstraint = [NSLayoutConstraint constraintWithItem:playerBar.view attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeft multiplier:1.0f constant:0.0f];
-    NSLayoutConstraint *barBottomConstraint = [NSLayoutConstraint constraintWithItem:playerBar.view attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1.0f constant:0.0f];
-    NSLayoutConstraint *barTopConstraint = [NSLayoutConstraint constraintWithItem:playerBar.view attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.playerSlider attribute: NSLayoutAttributeTop multiplier:1.0f constant:0.0f];
-    NSLayoutConstraint *barRightConstraint = [NSLayoutConstraint constraintWithItem:playerBar.view attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.view attribute: NSLayoutAttributeRight multiplier:1.0f constant:0.0f];
-    
-    [NSLayoutConstraint activateConstraints:@[barLeftConstraint, barBottomConstraint, barTopConstraint, barRightConstraint]];
-    barRightConstraint.active = YES;
-    barLeftConstraint.active = YES;
-    barBottomConstraint.active = YES;
-    barTopConstraint.active = YES;
-//    [self.view addConstraints:@[leftBarXConstraint, leftBarYConstraint, leftBarTopConstraint, leftBarRightConstraint]];
+    [self addingConstraintsForPlayerBar];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    //  -------------------------------------------
+    //  create url with stream_url and client_id
+    //  struct url from soundcloud: http://api.soundcloud.com/tracks/ + SOUNDCLOUD_TRACK_ID + /stream?client_id=YOUR_SOUNDCLOUD_API_KEY&filename=soundcloud.mp3
+    //example: http://api.soundcloud.com/tracks/237316367/stream?client_id=e0d5195b63d3e78ad2422fa9871fe2b1&filename=soundcloud.mp3
+    
+    //    NSString *urlString = [NSString stringWithFormat:@"%@/TimEmDemGiangSinh.mp3",[[NSBundle mainBundle] resourcePath]];
+    NSString *urlString = [NSString stringWithFormat:@"http://api.soundcloud.com/tracks/%@/stream?client_id=%@", self.track.ID, CLIENT_ID];
+    NSURL *url = [NSURL URLWithString:urlString];
+    
+    NSLog(@"%@", url);
+    NSLog(@"%@", self.track.streamURL);
+    //    self.playerControl = [[AVPlayer alloc] initWithURL:url];
+    //    self.playerControl.volume = 0.8;
+    //    [self.playerControl play];
+
+    [self.playerBar clickPlayButton:url];
+}
+
+#pragma mark - Adding constraints for playerBar
+
+- (void)addingConstraintsForPlayerBar {
+    self.playerBar.view.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    NSLayoutConstraint *barLeftConstraint = [NSLayoutConstraint constraintWithItem:self.playerBar.view attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeft multiplier:1.0f constant:0.0f];
+    NSLayoutConstraint *barBottomConstraint = [NSLayoutConstraint constraintWithItem:self.playerBar.view attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1.0f constant:0.0f];
+    NSLayoutConstraint *barTopConstraint = [NSLayoutConstraint constraintWithItem:self.playerBar.view attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.titleTrack attribute: NSLayoutAttributeTop multiplier:1.0f constant:30];
+    NSLayoutConstraint *barRightConstraint = [NSLayoutConstraint constraintWithItem:self.playerBar.view attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.view attribute: NSLayoutAttributeRight multiplier:1.0f constant:0.0f];
+    
+    [NSLayoutConstraint activateConstraints:@[barLeftConstraint, barBottomConstraint, barTopConstraint, barRightConstraint]];
+}
+
+#pragma mark - DropdownBarButton's event
+
+- (void)dropDownBarButton:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - Receive memory warning
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-- (IBAction)clickDropPlayerButton:(id)sender {
-    [self.playerControl play];
-    [self dismissViewControllerAnimated:YES completion:nil];
+#pragma mark - Playing music
+
+- (IBAction)playPauseButtonClick:(id)sender {
+    
 }
 
 

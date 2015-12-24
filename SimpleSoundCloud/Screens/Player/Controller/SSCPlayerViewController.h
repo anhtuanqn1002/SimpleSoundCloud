@@ -8,8 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+@class SSCTrackModel;
 @interface SSCPlayerViewController : UIViewController
 
 + (instancetype)shareInstance;
+
+@property (strong, nonatomic) SSCTrackModel *track;
 
 @end

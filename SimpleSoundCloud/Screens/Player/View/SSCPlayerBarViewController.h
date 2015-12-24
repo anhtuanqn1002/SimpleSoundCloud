@@ -10,4 +10,10 @@
 
 @interface SSCPlayerBarViewController : UIViewController
 
+- (IBAction)clickPlayButton:(id)sender;
+- (IBAction)clickForwardButton:(id)sender;
+- (IBAction)clickRewardButton:(id)sender;
+- (IBAction)clickShuffleButton:(id)sender;
+- (IBAction)clickLoopButton:(id)sender;
+
 @end

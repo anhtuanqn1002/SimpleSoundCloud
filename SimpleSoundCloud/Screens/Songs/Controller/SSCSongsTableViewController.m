@@ -102,6 +102,10 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     UINavigationController *nvSSCPplayer = [[UINavigationController alloc] initWithRootViewController:[SSCPlayerViewController shareInstance]];
     [self presentViewController:nvSSCPplayer animated:YES completion:nil];
+    [SSCPlayerViewController shareInstance].title = @"NOW PLAYING";
+    
+    [SSCPlayerViewController shareInstance].track = [self.songs objectAtIndex:indexPath.row];
+    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
@@ -120,6 +124,13 @@
             NSLog(@"Delete a row is failed");
         }
     }
+}
+
+#pragma mark - Sending items to Player
+
+- (void)sendingItemsToPlayer:(NSIndexPath *)indexPath sending:(void(^)(SSCTrackModel *model))send {
+    SSCTrackModel *md = [self.songs objectAtIndex:indexPath.row];
+    send(md);
 }
 
 #pragma mark - Set height of row
