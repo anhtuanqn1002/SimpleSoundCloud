@@ -13,6 +13,7 @@
 #import "SVPullToRefresh.h"
 #import "SSCDatabaseManager.h"
 #import "SVProgressHUD.h"
+#import "SSCPlayerViewController.h"
 
 @interface SSCSearchViewController ()<UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, SSCCategoryDetailsTableViewCellDelegate>
 
@@ -155,6 +156,13 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (tableView == self.suggestTableView) {
         self.searchBar.text = [self.suggestSearchResults objectAtIndex:indexPath.row];
+    } else {
+        UINavigationController *nvSSCPplayer = [[UINavigationController alloc] initWithRootViewController:[SSCPlayerViewController shareInstance]];
+        [self presentViewController:nvSSCPplayer animated:YES completion:nil];
+        [SSCPlayerViewController shareInstance].title = @"NOW PLAYING";
+        
+        [SSCPlayerViewController shareInstance].currentTrack = [self.searchResults objectAtIndex:indexPath.row];
+        [SSCPlayerViewController shareInstance].listTrack = self.searchResults;
     }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }

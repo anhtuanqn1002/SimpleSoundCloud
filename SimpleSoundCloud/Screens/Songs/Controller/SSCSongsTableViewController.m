@@ -24,7 +24,7 @@
 
 
 - (void)awakeFromNib {
-    self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    self.navigationItem.leftBarButtonItem = self.editButtonItem;
     //alloc and load data to songs
     self.songs = [[NSMutableArray alloc] init];
     self.songs = [[SSCDatabaseManager shareInstance] getListTrack:@"Songs" isUseType:NO withColumn:nil andValue:nil];
@@ -104,8 +104,8 @@
     [self presentViewController:nvSSCPplayer animated:YES completion:nil];
     [SSCPlayerViewController shareInstance].title = @"NOW PLAYING";
     
-    [SSCPlayerViewController shareInstance].track = [self.songs objectAtIndex:indexPath.row];
-    
+    [SSCPlayerViewController shareInstance].currentTrack = [self.songs objectAtIndex:indexPath.row];
+    [SSCPlayerViewController shareInstance].listTrack = self.songs;
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 

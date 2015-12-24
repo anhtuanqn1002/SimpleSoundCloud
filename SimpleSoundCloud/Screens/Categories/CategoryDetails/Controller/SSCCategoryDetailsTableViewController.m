@@ -14,6 +14,7 @@
 #import "SVProgressHUD.h"
 #import "SSCDatabaseManager.h"
 #import "SVPullToRefresh.h"
+#import "SSCPlayerViewController.h"
 
 @interface SSCCategoryDetailsTableViewController () <SSCCategoryDetailsTableViewCellDelegate>
 
@@ -181,6 +182,16 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    //------------------------------
+    // playing music
+    UINavigationController *nvSSCPplayer = [[UINavigationController alloc] initWithRootViewController:[SSCPlayerViewController shareInstance]];
+    [self presentViewController:nvSSCPplayer animated:YES completion:nil];
+    [SSCPlayerViewController shareInstance].title = @"NOW PLAYING";
+    
+    [SSCPlayerViewController shareInstance].currentTrack = [self.songs objectAtIndex:indexPath.row];
+    [SSCPlayerViewController shareInstance].listTrack = self.songs;
+    //------------------------------
+    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 

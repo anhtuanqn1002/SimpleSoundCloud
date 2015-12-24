@@ -10,6 +10,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import "SSCPlayerBarViewController.h"
 #import "SSCTrackModel.h"
+#import "UIImageView+WebCache.h"
 
 #define CLIENT_ID @"e0d5195b63d3e78ad2422fa9871fe2b1"
 
@@ -20,7 +21,6 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *avatarPlayer;
 @property (weak, nonatomic) IBOutlet UISlider *playerSlider;
-//@property (strong, nonatomic) SSCPlayerBarViewController *playerBar;
 @property (weak, nonatomic) IBOutlet UILabel *startLabel;
 @property (weak, nonatomic) IBOutlet UILabel *endLabel;
 @property (weak, nonatomic) IBOutlet UILabel *titleTrack;
@@ -33,11 +33,13 @@
 
 @property (assign, nonatomic) BOOL isPlaying;
 @property (assign, nonatomic) BOOL isChangeTrack;
-@property (strong, nonatomic) NSString *currentTrack;
+@property (strong, nonatomic) NSString *currentTrackName;
 
 @end
 
 @implementation SSCPlayerViewController
+
+#pragma mark - Share Instance
 
 + (instancetype)shareInstance {
     static SSCPlayerViewController *player = nil;
@@ -51,58 +53,109 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    
     //  -------------------------------------------
     //    Add bar button
     UIBarButtonItem *dropDownBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"menuFilled-100.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(dropDownBarButton:)];
     self.navigationItem.leftBarButtonItem = dropDownBarButton;
+    
+    //  -------Start screen------------------------
+    [self startPlayerViewController];
+    
+    NSLog(@"Number of playlist: %ld", [self.listTrack count]);
+}
+
+#pragma mark - Start screen
+
+- (void)startPlayerViewController {
+    
     //  -------------------------------------------
-    
-//    self.playerBar = [[SSCPlayerBarViewController alloc] initWithNibName:@"SSCPlayerBarViewController" bundle:nil];
-    
-//    [self.view addSubview:self.playerBar.view];
-//    [self addingConstraintsForPlayerBar];
+    //  init avplayer
     self.playerControl = [[AVPlayer alloc] init];
     self.isPlaying = NO;
     self.isChangeTrack = YES;
+    
+    //  slider change value
+    [self.playerSlider addTarget:self action:@selector(playerSliderChangeValue:) forControlEvents:UIControlEventTouchUpInside];
 }
 
+#pragma mark - viewDidAppear
+
 - (void)viewDidAppear:(BOOL)animated {
+    [self playingNewTrack:YES];
+}
+
+#pragma mark - Play new track
+
+- (void)playingNewTrack:(BOOL)isPlay {
     //  -------------------------------------------
     //  create url with stream_url and client_id
     //  struct url from soundcloud: http://api.soundcloud.com/tracks/ + SOUNDCLOUD_TRACK_ID + /stream?client_id=YOUR_SOUNDCLOUD_API_KEY&filename=soundcloud.mp3
     //example: http://api.soundcloud.com/tracks/237316367/stream?client_id=e0d5195b63d3e78ad2422fa9871fe2b1&filename=soundcloud.mp3
     
     //    NSString *urlString = [NSString stringWithFormat:@"%@/TimEmDemGiangSinh.mp3",[[NSBundle mainBundle] resourcePath]];
-    NSString *urlString = [NSString stringWithFormat:@"http://api.soundcloud.com/tracks/%@/stream?client_id=%@", self.track.ID, CLIENT_ID];
+    NSString *urlString = [NSString stringWithFormat:@"http://api.soundcloud.com/tracks/%@/stream?client_id=%@", self.currentTrack.ID, CLIENT_ID];
     NSURL *url = [NSURL URLWithString:urlString];
     if (self.isChangeTrack) {
-        self.currentTrack = urlString;
+        self.currentTrackName = urlString;
         self.playerControl = nil;
         self.playerControl = [[AVPlayer alloc] initWithURL:url];
-        self.isPlaying = YES;
+        self.isPlaying = isPlay;
     } else {
         
     }
     NSLog(@"%@", url);
-    NSLog(@"%@", self.track.streamURL);
-    
+    NSLog(@"%@", self.currentTrack.streamURL);
+    //    -------------------------------------------------
+    //    setup player control
+    //    duration.value/duration.timescale = second
+    self.playerSlider.maximumValue = self.playerControl.currentItem.asset.duration.value/self.playerControl.currentItem.asset.duration.timescale;
     self.playerControl.volume = 0.8;
-    [self.playerControl play];
+    
+    if (self.isPlaying) {
+        [self.playerControl play];
+    } else {
+        [self.playerControl pause];
+    }
+    
+    //  -------setup screen------------------------
+    [self setupScreen];
+    
+    __weak typeof(self) weakself = self;
+    //  -------------------------------------------
+    //  player process bar
+    [self.playerControl addPeriodicTimeObserverForInterval:CMTimeMake(1, 1) queue:dispatch_get_main_queue() usingBlock:^(CMTime time) {
+        weakself.playerSlider.value = weakself.playerControl.currentTime.value/weakself.playerControl.currentTime.timescale;
+        NSInteger durationSeconds = weakself.playerControl.currentTime.value/weakself.playerControl.currentTime.timescale;
+        NSInteger minutes = floor(durationSeconds % 3600 / 60);
+        NSInteger seconds = floor(durationSeconds % 3600 % 60);
+        weakself.startLabel.text = [NSString stringWithFormat:@"%02ld:%02ld", minutes, seconds];
+        
+        //--------------if currenttime == duration
+        // then stop currenttrack and next track
+        if (weakself.playerControl.currentTime.value == weakself.playerControl.currentItem.asset.duration.value) {
+            NSLog(@"end current track --> next track");
+            [weakself forwardButtonClick:nil];
+        }
+    }];
 }
 
-//#pragma mark - Adding constraints for playerBar
-//
-//- (void)addingConstraintsForPlayerBar {
-//    self.playerBar.view.translatesAutoresizingMaskIntoConstraints = NO;
-//    
-//    NSLayoutConstraint *barLeftConstraint = [NSLayoutConstraint constraintWithItem:self.playerBar.view attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeft multiplier:1.0f constant:0.0f];
-//    NSLayoutConstraint *barBottomConstraint = [NSLayoutConstraint constraintWithItem:self.playerBar.view attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1.0f constant:0.0f];
-//    NSLayoutConstraint *barTopConstraint = [NSLayoutConstraint constraintWithItem:self.playerBar.view attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.titleTrack attribute: NSLayoutAttributeTop multiplier:1.0f constant:30];
-//    NSLayoutConstraint *barRightConstraint = [NSLayoutConstraint constraintWithItem:self.playerBar.view attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.view attribute: NSLayoutAttributeRight multiplier:1.0f constant:0.0f];
-//    
-//    [NSLayoutConstraint activateConstraints:@[barLeftConstraint, barBottomConstraint, barTopConstraint, barRightConstraint]];
-//}
+#pragma mark - Setup screen
+
+- (void)setupScreen {
+    
+    //  --------------------------------------------
+    //  set all label when playing new track
+    self.playerSlider.value = 0;
+    self.titleTrack.text = self.currentTrack.trackTitle;
+    self.startLabel.text = @"00:00";
+    NSInteger durationSeconds = self.playerControl.currentItem.asset.duration.value/self.playerControl.currentItem.asset.duration.timescale;
+    NSInteger minutes = floor(durationSeconds % 3600 / 60);
+    NSInteger seconds = floor(durationSeconds % 3600 % 60);
+    self.endLabel.text = [NSString stringWithFormat:@"%02ld:%02ld", minutes, seconds];
+    
+    //  --------------Setup avatar image
+    [self.avatarPlayer sd_setImageWithURL:[NSURL URLWithString:self.currentTrack.artworkURL] placeholderImage:[UIImage imageNamed:@"icon_artwork_default.png"]];
+}
 
 #pragma mark - DropdownBarButton's event
 
@@ -131,6 +184,48 @@
     }
 }
 
+- (IBAction)forwardButtonClick:(id)sender {
+    NSInteger index = [self.listTrack indexOfObject:self.currentTrack];
+    if (index == [self.listTrack count] - 1) {
+        self.currentTrack = [self.listTrack firstObject];
+    } else {
+        self.currentTrack = [self.listTrack objectAtIndex:index+1];
+    }
+    if (self.isPlaying) {
+        [self playingNewTrack:YES];
+    } else {
+        [self playingNewTrack:NO];
+    }
+}
+
+- (IBAction)rewardButtonClick:(id)sender {
+    NSInteger index = [self.listTrack indexOfObject:self.currentTrack];
+    if (index == 0) {
+        self.currentTrack = [self.listTrack lastObject];
+    } else {
+        self.currentTrack = [self.listTrack objectAtIndex:index-1];
+    }
+    
+    if (self.isPlaying) {
+        [self playingNewTrack:YES];
+    } else {
+        [self playingNewTrack:NO];
+    }
+}
+
+- (IBAction)loopButtonClick:(id)sender {
+}
+
+- (IBAction)shuffleButtonClick:(id)sender {
+}
+
+#pragma mark - Player silder change value
+
+- (void)playerSliderChangeValue:(id)sender {
+    NSLog(@"%f", self.playerSlider.value);
+    CMTime cmTime = CMTimeMake(self.playerSlider.value, 1);
+    [self.playerControl seekToTime:cmTime];
+}
 
 /*
 #pragma mark - Navigation

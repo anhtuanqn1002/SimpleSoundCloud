@@ -31,11 +31,10 @@
                         <constraint firstAttribute="height" constant="300" id="Cxv-TL-P1t"/>
                     </constraints>
                 </imageView>
-                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="xHg-d6-hRP">
+                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="xHg-d6-hRP">
                     <rect key="frame" x="18" y="310" width="564" height="31"/>
                     <color key="minimumTrackTintColor" red="0.9589974832" green="0.110082844" blue="0.13517197989999999" alpha="1" colorSpace="calibratedRGB"/>
                     <color key="maximumTrackTintColor" red="0.36862745099999999" green="0.71372549019999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                    <color key="thumbTintColor" red="0.30980392159999998" green="0.64705882349999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                 </slider>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eJ2-V4-ZsN">
                     <rect key="frame" x="20" y="341" width="46" height="21"/>
@@ -43,14 +42,14 @@
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="11:11" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lDw-4t-2F2">
-                    <rect key="frame" x="545" y="341" width="35" height="21"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lDw-4t-2F2">
+                    <rect key="frame" x="534" y="341" width="46" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Track name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ge3-9l-H8s">
-                    <rect key="frame" x="255" y="370" width="90" height="21"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="..." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="0.0" translatesAutoresizingMaskIntoConstraints="NO" id="Ge3-9l-H8s">
+                    <rect key="frame" x="30" y="370" width="540" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
@@ -61,14 +60,23 @@
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eEL-qY-5AS">
                             <rect key="frame" x="219" y="52" width="32" height="24"/>
                             <state key="normal" image="rewind.png"/>
+                            <connections>
+                                <action selector="rewardButtonClick:" destination="-1" eventType="touchUpInside" id="8vS-eP-TE4"/>
+                            </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lul-1l-a1v">
                             <rect key="frame" x="349" y="52" width="32" height="24"/>
                             <state key="normal" image="forward.png"/>
+                            <connections>
+                                <action selector="forwardButtonClick:" destination="-1" eventType="touchUpInside" id="d7L-Bp-EvK"/>
+                            </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2er-h0-Pvt">
                             <rect key="frame" x="20" y="50" width="32" height="29"/>
                             <state key="normal" image="shuffle.png"/>
+                            <connections>
+                                <action selector="shuffleButtonClick:" destination="-1" eventType="touchUpInside" id="Trp-zL-yop"/>
+                            </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Fc-nS-fM6">
                             <rect key="frame" x="274" y="38" width="52" height="52"/>
@@ -86,6 +94,9 @@
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hrM-2T-p1h">
                             <rect key="frame" x="548" y="51" width="32" height="26"/>
                             <state key="normal" image="loop.png"/>
+                            <connections>
+                                <action selector="loopButtonClick:" destination="-1" eventType="touchUpInside" id="xV9-3X-9Oz"/>
+                            </connections>
                         </button>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -106,7 +117,9 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstItem="Ge3-9l-H8s" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="30" id="4yd-an-eUw"/>
                 <constraint firstItem="Ge3-9l-H8s" firstAttribute="top" secondItem="xHg-d6-hRP" secondAttribute="bottom" constant="30" id="52G-6z-RiH"/>
+                <constraint firstAttribute="trailing" secondItem="Ge3-9l-H8s" secondAttribute="trailing" constant="30" id="D6s-F9-FJ3"/>
                 <constraint firstAttribute="trailing" secondItem="hhW-pO-4Di" secondAttribute="trailing" id="Epe-tv-w2N"/>
                 <constraint firstItem="xHg-d6-hRP" firstAttribute="top" secondItem="lhM-3d-PxM" secondAttribute="bottom" constant="10" id="FFh-UL-ox4"/>
                 <constraint firstItem="lDw-4t-2F2" firstAttribute="top" secondItem="xHg-d6-hRP" secondAttribute="bottom" constant="1" id="IXy-Ij-Eci"/>

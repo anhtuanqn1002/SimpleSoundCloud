@@ -13,6 +13,7 @@
 
 + (instancetype)shareInstance;
 
-@property (strong, nonatomic) SSCTrackModel *track;
+@property (strong, nonatomic) SSCTrackModel *currentTrack;
+@property (strong, nonatomic) NSMutableArray *listTrack;
 
 @end
