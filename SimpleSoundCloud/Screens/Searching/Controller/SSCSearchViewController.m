@@ -14,6 +14,7 @@
 #import "SSCDatabaseManager.h"
 #import "SVProgressHUD.h"
 #import "SSCPlayerViewController.h"
+#import "NSString+Encoding.h"
 
 @interface SSCSearchViewController ()<UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, SSCCategoryDetailsTableViewCellDelegate>
 
@@ -191,7 +192,8 @@
 - (void)getDataSearchWithKeyword:(NSString *)keyword andLimit:(NSInteger)limit andOffset:(NSInteger)offset {
     //dimiss the keyboard and hidden suggest tableview
     [self.searchBar endEditing:YES];
-//    self.suggestTableView.hidden = YES;
+    
+    //self.suggestTableView.hidden = YES;
     self.viewShadowForSuggestTableView.hidden = YES;
     
     __weak typeof (self) weakself = self;
@@ -220,6 +222,11 @@
 //event text did change, we show suggest results with google API
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
     NSLog(@"search text did change");
+    //encode to UTF8 before search
+    NSData *data = [searchText dataUsingEncoding:NSUTF8StringEncoding];
+    searchText = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    
+    NSLog(@"%@", searchText);
 //    self.suggestTableView.hidden = NO;
     self.viewShadowForSuggestTableView.hidden = NO;
     __weak typeof (self) weakself = self;

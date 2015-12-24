@@ -134,7 +134,9 @@
 #pragma mark - Get data for suggest
 
 - (void)getSuggestDataUseGoogleAPIWithKeyword:(NSString *)keyword success:(void(^)(NSArray *response))success failure:(void(^)(NSError *error))failure {
+    //encoding with category of NSString+Encoding
     keyword = [keyword URLEncodeStringFromString:keyword];
+    
     NSString *urlString = [NSString stringWithFormat:@"http://suggestqueries.google.com/complete/search?q=%@&ds=yt&client=firefox&hjson=t&cp=3", keyword];
     NSURL *url = [NSURL URLWithString:urlString];
     NSLog(@"%@",url);
@@ -167,9 +169,12 @@
 #pragma mark - Get data for searching
 
 - (void)getJsonDataSearchWithKeyword:(NSString *)keyword andLimit:(NSInteger)limit andOffset:(NSInteger)offset success:(void(^)(NSArray *response))success failure:(void(^)(NSError *error))failure {
+    //encoding with category of NSString+Encoding
+    keyword = [keyword URLEncodeStringFromString:keyword];
+
     NSString *urlString = [NSString stringWithFormat:@"https://api-v2.soundcloud.com/search?q=%@&limit=%ld&offset=%ld", keyword, limit, offset];
-    NSString *urlString2 = [urlString stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
-    NSURL *url = [NSURL URLWithString:urlString2];
+//    NSString *urlString2 = [urlString stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
+    NSURL *url = [NSURL URLWithString:urlString];
     
     NSURLSession *session = [NSURLSession sharedSession];
     NSURLSessionDataTask *jsonData = [session dataTaskWithURL:url completionHandler:^(NSData *data,
