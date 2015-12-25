@@ -11,5 +11,6 @@
 @interface SSCCategoryDetailsTableViewController : UITableViewController
 
 @property (nonatomic, strong) NSString *genres;
+@property (nonatomic, assign) BOOL isShow;
 
 @end

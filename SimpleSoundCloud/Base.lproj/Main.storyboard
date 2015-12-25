@@ -159,11 +159,12 @@
                         <rect key="frame" x="0.0" y="975" width="768" height="49"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="barTintColor" red="0.36862745099999999" green="0.71372549019999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     </tabBar>
                     <connections>
-                        <segue destination="N3l-6S-jPu" kind="relationship" relationship="viewControllers" id="al0-9u-KkO"/>
                         <segue destination="Yzj-op-DDf" kind="relationship" relationship="viewControllers" id="0nK-La-kHp"/>
                         <segue destination="e0Q-Xt-IXh" kind="relationship" relationship="viewControllers" id="hF6-4d-8OV"/>
+                        <segue destination="N3l-6S-jPu" kind="relationship" relationship="viewControllers" id="al0-9u-KkO"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HuB-VB-40B" sceneMemberID="firstResponder"/>

@@ -15,5 +15,6 @@
 
 @property (strong, nonatomic) SSCTrackModel *currentTrack;
 @property (strong, nonatomic) NSMutableArray *listTrack;
+@property (assign, nonatomic) BOOL isChangeTrack;
 
 @end

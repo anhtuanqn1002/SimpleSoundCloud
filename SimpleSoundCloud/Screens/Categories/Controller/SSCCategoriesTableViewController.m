@@ -14,7 +14,7 @@
 @interface SSCCategoriesTableViewController ()
 
 @property (nonatomic, strong) NSDictionary *categories;
-
+@property (nonatomic, assign) BOOL isShow;
 @end
 
 @implementation SSCCategoriesTableViewController
@@ -22,7 +22,8 @@
 #pragma mark - viewDidLoad
 
 - (void)awakeFromNib {
-    
+    self.isShow = NO;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(turnOnPlayerScreen:) name:@"TURN_ON_PLAYER" object:nil];
 }
 
 - (void)viewDidLoad {
@@ -49,6 +50,13 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+
+#pragma mark - Turn on - turn off player screen notification
+
+- (void)turnOnPlayerScreen:(id)sender {
+    self.isShow= YES;
 }
 
 #pragma mark - Setup data when starting
@@ -105,7 +113,7 @@
         SSCCategoryDetailsTableViewController *controller = segue.destinationViewController;
         NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
         controller.genres = self.categories[self.categories.allKeys[indexPath.section]][indexPath.row];
-//        NSLog(@"%@",self.categories[self.categories.allKeys[indexPath.section]][indexPath.row]);
+        controller.isShow = self.isShow;
     }
 }
 

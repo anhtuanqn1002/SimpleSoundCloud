@@ -29,6 +29,7 @@
 @property (assign, nonatomic) NSInteger offset;
 @property (assign, nonatomic) NSInteger limit;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *heightConstraintForSuggestTableView;
+@property (strong, nonatomic) UIBarButtonItem *rightBarButton;
 
 @end
 
@@ -36,6 +37,12 @@
 
 - (void)awakeFromNib {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeItemFromSongsToSearch:) name:@"REMOVE_ITEM_TO_SEARCH" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(turnOnPlayerScreen:) name:@"TURN_ON_PLAYER" object:nil];
+    
+    //adding right bar button
+    self.rightBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPlay target:self action:@selector(rightBarButtonClick:)];
+    self.rightBarButton.enabled = NO;
+    self.navigationItem.rightBarButtonItem = self.rightBarButton;
 }
 
 - (void)viewDidLoad {
@@ -75,19 +82,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - Set shadow for SUGGEST TABLEVIEW
-
-//- (void)setShadowForTableView:(UITableView *)tableView withColor:(UIColor *)color andOffset:(CGSize)offset andRadius:(CGFloat)radius andOpacity:(CGFloat)opacity andCornerRadius:(CGFloat)cornerRadius{
-////    tableView.clipsToBounds = NO;
-////    tableView.layer.masksToBounds = NO;
-//    [tableView.layer setShadowColor:[color CGColor]];
-//    [tableView.layer setShadowOffset:offset];
-//    [tableView.layer setShadowRadius:radius];
-//    [tableView.layer setShadowOpacity:opacity];
-//    [tableView.layer setCornerRadius:cornerRadius];
-//    
-//}
-
 #pragma mark - Notification (removing items)
 
 - (void)removeItemFromSongsToSearch:(NSNotification *)notification {
@@ -99,6 +93,12 @@
             return;
         }
     }
+}
+
+#pragma mark - Turn on - turn off player screen notification
+
+- (void)turnOnPlayerScreen:(id)sender {
+    [self.rightBarButton setEnabled:YES];
 }
 
 #pragma mark - Tableview datasource
@@ -164,6 +164,7 @@
         
         [SSCPlayerViewController shareInstance].currentTrack = [self.searchResults objectAtIndex:indexPath.row];
         [SSCPlayerViewController shareInstance].listTrack = self.searchResults;
+        [SSCPlayerViewController shareInstance].isChangeTrack = YES;
     }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
@@ -173,6 +174,15 @@
         return 70;
     }
     return 30;
+}
+
+#pragma mark - Right barbutton event --> show player screen
+
+- (void)rightBarButtonClick:(id)sender {
+    UINavigationController *nvSSCPplayer = [[UINavigationController alloc] initWithRootViewController:[SSCPlayerViewController shareInstance]];
+    [self presentViewController:nvSSCPplayer animated:YES completion:nil];
+    [SSCPlayerViewController shareInstance].title = @"NOW PLAYING";
+    [SSCPlayerViewController shareInstance].isChangeTrack = NO;
 }
 
 #pragma mark - Searchbar delegate

@@ -26,74 +26,84 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="lhM-3d-PxM">
-                    <rect key="frame" x="0.0" y="0.0" width="600" height="300"/>
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="350"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="300" id="Cxv-TL-P1t"/>
+                        <constraint firstAttribute="height" constant="350" id="Cxv-TL-P1t"/>
                     </constraints>
                 </imageView>
                 <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="xHg-d6-hRP">
-                    <rect key="frame" x="18" y="310" width="564" height="31"/>
+                    <rect key="frame" x="18" y="360" width="564" height="31"/>
                     <color key="minimumTrackTintColor" red="0.9589974832" green="0.110082844" blue="0.13517197989999999" alpha="1" colorSpace="calibratedRGB"/>
                     <color key="maximumTrackTintColor" red="0.36862745099999999" green="0.71372549019999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                 </slider>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eJ2-V4-ZsN">
-                    <rect key="frame" x="20" y="341" width="46" height="21"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <rect key="frame" x="20" y="391" width="34" height="15"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lDw-4t-2F2">
-                    <rect key="frame" x="534" y="341" width="46" height="21"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <rect key="frame" x="546" y="391" width="34" height="15"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="..." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="0.0" translatesAutoresizingMaskIntoConstraints="NO" id="Ge3-9l-H8s">
-                    <rect key="frame" x="30" y="370" width="540" height="21"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="track name" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="0.0" translatesAutoresizingMaskIntoConstraints="NO" id="Ge3-9l-H8s">
+                    <rect key="frame" x="30" y="410" width="540" height="19"/>
+                    <fontDescription key="fontDescription" name="GurmukhiMN" family="Gurmukhi MN" pointSize="13"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hhW-pO-4Di">
-                    <rect key="frame" x="0.0" y="472" width="600" height="128"/>
+                    <rect key="frame" x="0.0" y="500" width="600" height="100"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eEL-qY-5AS">
-                            <rect key="frame" x="219" y="52" width="32" height="24"/>
+                            <rect key="frame" x="219" y="38" width="32" height="24"/>
                             <state key="normal" image="rewind.png"/>
                             <connections>
                                 <action selector="rewardButtonClick:" destination="-1" eventType="touchUpInside" id="8vS-eP-TE4"/>
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lul-1l-a1v">
-                            <rect key="frame" x="349" y="52" width="32" height="24"/>
+                            <rect key="frame" x="349" y="38" width="32" height="24"/>
                             <state key="normal" image="forward.png"/>
                             <connections>
                                 <action selector="forwardButtonClick:" destination="-1" eventType="touchUpInside" id="d7L-Bp-EvK"/>
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2er-h0-Pvt">
-                            <rect key="frame" x="20" y="50" width="32" height="29"/>
-                            <state key="normal" image="shuffle.png"/>
+                            <rect key="frame" x="20" y="30" width="40" height="40"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="40" id="U93-dy-ifw"/>
+                                <constraint firstAttribute="height" constant="40" id="zHY-9L-at6"/>
+                            </constraints>
+                            <state key="normal" image="shuffle2.png"/>
                             <connections>
                                 <action selector="shuffleButtonClick:" destination="-1" eventType="touchUpInside" id="Trp-zL-yop"/>
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Fc-nS-fM6">
-                            <rect key="frame" x="274" y="38" width="52" height="52"/>
+                            <rect key="frame" x="274" y="24" width="52" height="52"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="52" id="Uqb-c2-2GN"/>
                                 <constraint firstAttribute="height" constant="52" id="na4-Io-8SN"/>
                             </constraints>
                             <size key="titleShadowOffset" width="1" height="1"/>
-                            <state key="normal" image="play_stop_blue.png"/>
-                            <state key="selected" image="pause_blue.png"/>
+                            <state key="normal" image="play.png"/>
+                            <state key="selected" title="a" image="pause.png">
+                                <color key="titleShadowColor" red="0.9589974832" green="0.13074095129999999" blue="0.75967075360000003" alpha="1" colorSpace="calibratedRGB"/>
+                            </state>
                             <connections>
                                 <action selector="playPauseButtonClick:" destination="-1" eventType="touchUpInside" id="mpS-zI-Fn6"/>
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hrM-2T-p1h">
-                            <rect key="frame" x="548" y="51" width="32" height="26"/>
-                            <state key="normal" image="loop.png"/>
+                            <rect key="frame" x="540" y="30" width="40" height="40"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="40" id="l4L-12-E9T"/>
+                                <constraint firstAttribute="width" constant="40" id="yr8-rf-q6p"/>
+                            </constraints>
+                            <state key="normal" image="loop_music.png"/>
                             <connections>
                                 <action selector="loopButtonClick:" destination="-1" eventType="touchUpInside" id="xV9-3X-9Oz"/>
                             </connections>
@@ -102,7 +112,7 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstItem="1Fc-nS-fM6" firstAttribute="centerX" secondItem="hhW-pO-4Di" secondAttribute="centerX" id="5eG-4s-3fp"/>
-                        <constraint firstAttribute="height" constant="128" id="6a3-Ql-3po"/>
+                        <constraint firstAttribute="height" constant="100" id="6a3-Ql-3po"/>
                         <constraint firstAttribute="trailing" secondItem="hrM-2T-p1h" secondAttribute="trailing" constant="20" id="DqG-U2-awb"/>
                         <constraint firstItem="1Fc-nS-fM6" firstAttribute="centerY" secondItem="hhW-pO-4Di" secondAttribute="centerY" id="G9K-iO-Smm"/>
                         <constraint firstItem="Lul-1l-a1v" firstAttribute="centerY" secondItem="hhW-pO-4Di" secondAttribute="centerY" id="Jbt-Gd-MpG"/>
@@ -118,7 +128,7 @@
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="Ge3-9l-H8s" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="30" id="4yd-an-eUw"/>
-                <constraint firstItem="Ge3-9l-H8s" firstAttribute="top" secondItem="xHg-d6-hRP" secondAttribute="bottom" constant="30" id="52G-6z-RiH"/>
+                <constraint firstItem="Ge3-9l-H8s" firstAttribute="top" secondItem="xHg-d6-hRP" secondAttribute="bottom" constant="20" id="52G-6z-RiH"/>
                 <constraint firstAttribute="trailing" secondItem="Ge3-9l-H8s" secondAttribute="trailing" constant="30" id="D6s-F9-FJ3"/>
                 <constraint firstAttribute="trailing" secondItem="hhW-pO-4Di" secondAttribute="trailing" id="Epe-tv-w2N"/>
                 <constraint firstItem="xHg-d6-hRP" firstAttribute="top" secondItem="lhM-3d-PxM" secondAttribute="bottom" constant="10" id="FFh-UL-ox4"/>
@@ -141,10 +151,10 @@
     </objects>
     <resources>
         <image name="forward.png" width="32" height="24"/>
-        <image name="loop.png" width="32" height="26"/>
-        <image name="pause_blue.png" width="170" height="170"/>
-        <image name="play_stop_blue.png" width="170" height="170"/>
+        <image name="loop_music.png" width="185" height="172"/>
+        <image name="pause.png" width="52" height="52"/>
+        <image name="play.png" width="52" height="52"/>
         <image name="rewind.png" width="32" height="24"/>
-        <image name="shuffle.png" width="32" height="29"/>
+        <image name="shuffle2.png" width="180" height="168"/>
     </resources>
 </document>

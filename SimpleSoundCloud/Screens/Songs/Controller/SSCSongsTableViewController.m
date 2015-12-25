@@ -17,6 +17,7 @@
 @interface SSCSongsTableViewController ()
 
 @property (nonatomic, strong) NSMutableArray *songs;
+@property (nonatomic, strong) UIBarButtonItem *rightBarButton;
 
 @end
 
@@ -29,10 +30,20 @@
     self.songs = [[NSMutableArray alloc] init];
     self.songs = [[SSCDatabaseManager shareInstance] getListTrack:@"Songs" isUseType:NO withColumn:nil andValue:nil];
     
+    //  ---------------------------------------
+    //  register to recieve all notification
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addItemFromCategoryDetais:) name:@"CATEGORYDETAILS_ADD_ITEM_TO_SONGS" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addItemFromSearch:) name:@"SEARCH_ADD_ITEM_TO_SONGS" object:nil];
-
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(turnOnPlayerScreen:) name:@"TURN_ON_PLAYER" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(turnOffPlayerScreen:) name:@"TURN_OFF_PLAYER" object:nil];
+    
     [self.tableView registerNib:[UINib nibWithNibName:@"SSCCategoryDetailsTableViewCell" bundle:nil] forCellReuseIdentifier:@"SSCCategoryDetailsTableViewCell"];
+    
+    //adding right bar button
+    self.rightBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPlay target:self action:@selector(rightBarButtonClick:)];
+    self.rightBarButton.enabled = NO;
+    self.navigationItem.rightBarButtonItem = self.rightBarButton;
+    
     [self updateData];
 }
 
@@ -78,6 +89,16 @@
     }
 }
 
+#pragma mark - Turn on - turn off player screen notification
+
+- (void)turnOnPlayerScreen:(id)sender {
+    [self.rightBarButton setEnabled:YES];
+}
+
+- (void)turnOffPlayerScreen:(id)sender {
+    [self.rightBarButton setEnabled:NO];
+}
+
 #pragma mark - Table data source
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -106,6 +127,7 @@
     
     [SSCPlayerViewController shareInstance].currentTrack = [self.songs objectAtIndex:indexPath.row];
     [SSCPlayerViewController shareInstance].listTrack = self.songs;
+    [SSCPlayerViewController shareInstance].isChangeTrack = YES;
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
@@ -124,6 +146,15 @@
             NSLog(@"Delete a row is failed");
         }
     }
+}
+
+#pragma mark - Right barbutton event --> show player screen
+
+- (void)rightBarButtonClick:(id)sender {
+    UINavigationController *nvSSCPplayer = [[UINavigationController alloc] initWithRootViewController:[SSCPlayerViewController shareInstance]];
+    [self presentViewController:nvSSCPplayer animated:YES completion:nil];
+    [SSCPlayerViewController shareInstance].title = @"NOW PLAYING";
+    [SSCPlayerViewController shareInstance].isChangeTrack = NO;
 }
 
 #pragma mark - Sending items to Player

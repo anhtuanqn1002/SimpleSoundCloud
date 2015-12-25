@@ -32,8 +32,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *loopButton;
 
 @property (assign, nonatomic) BOOL isPlaying;
-@property (assign, nonatomic) BOOL isChangeTrack;
 @property (strong, nonatomic) NSString *currentTrackName;
+@property (assign, nonatomic) BOOL isShow;
 
 @end
 
@@ -61,6 +61,10 @@
     //  -------Start screen------------------------
     [self startPlayerViewController];
     
+    //  -------------------------------------------
+    //  turn on Player Screen notification
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"TURN_ON_PLAYER" object:nil];
+    
     NSLog(@"Number of playlist: %ld", [self.listTrack count]);
 }
 
@@ -71,7 +75,8 @@
     //  -------------------------------------------
     //  init avplayer
     self.playerControl = [[AVPlayer alloc] init];
-    self.isPlaying = NO;
+    self.isPlaying = YES;
+    [self.playPauseButton setSelected:YES];
     self.isChangeTrack = YES;
     
     //  slider change value
@@ -145,9 +150,14 @@
     
     //  --------------------------------------------
     //  set all label when playing new track
-    self.playerSlider.value = 0;
+    self.playerSlider.value = self.playerControl.currentTime.value/self.playerControl.currentTime.timescale;
     self.titleTrack.text = self.currentTrack.trackTitle;
-    self.startLabel.text = @"00:00";
+    
+    NSInteger startDurationSeconds = self.playerControl.currentTime.value/self.playerControl.currentTime.timescale;
+    NSInteger startMinutes = floor(startDurationSeconds % 3600 / 60);
+    NSInteger startSeconds = floor(startDurationSeconds % 3600 % 60);
+    self.startLabel.text = [NSString stringWithFormat:@"%02ld:%02ld", startMinutes, startSeconds];
+    
     NSInteger durationSeconds = self.playerControl.currentItem.asset.duration.value/self.playerControl.currentItem.asset.duration.timescale;
     NSInteger minutes = floor(durationSeconds % 3600 / 60);
     NSInteger seconds = floor(durationSeconds % 3600 % 60);
@@ -174,13 +184,15 @@
 
 - (IBAction)playPauseButtonClick:(id)sender {
     if (self.isPlaying) {
-        [self.playPauseButton setSelected:YES];
+        [self.playPauseButton setSelected:NO];
         [self.playerControl pause];
         self.isPlaying = NO;
+//        [[NSNotificationCenter defaultCenter] postNotificationName:@"TURN_OFF_PLAYER" object:nil];
     } else {
-        [self.playPauseButton setSelected:NO];
+        [self.playPauseButton setSelected:YES];
         [self.playerControl play];
         self.isPlaying = YES;
+//        [[NSNotificationCenter defaultCenter] postNotificationName:@"TURN_ON_PLAYER" object:nil];
     }
 }
 
@@ -214,6 +226,12 @@
 }
 
 - (IBAction)loopButtonClick:(id)sender {
+    if (self.loopButton.state == UIControlStateNormal) {
+        self.loopButton.highlighted = YES;
+//        self.loopButton 
+    } else if (self.loopButton.state == UIControlStateHighlighted) {
+        self.loopButton.selected = YES;
+    }
 }
 
 - (IBAction)shuffleButtonClick:(id)sender {
@@ -225,6 +243,7 @@
     NSLog(@"%f", self.playerSlider.value);
     CMTime cmTime = CMTimeMake(self.playerSlider.value, 1);
     [self.playerControl seekToTime:cmTime];
+    [self.playerControl play];
 }
 
 /*

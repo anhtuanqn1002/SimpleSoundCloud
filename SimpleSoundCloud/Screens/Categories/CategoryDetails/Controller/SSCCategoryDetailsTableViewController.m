@@ -21,7 +21,7 @@
 @property (nonatomic, assign) NSInteger limit;
 @property (nonatomic, assign) NSInteger offset;
 @property (nonatomic, strong) NSMutableArray *songs;
-
+@property (nonatomic, strong) UIBarButtonItem *rightBarButton;
 //using get next data (load more)
 //@property (nonatomic, strong) NSString *nextLink;
 
@@ -31,6 +31,12 @@
 
 - (void)awakeFromNib {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeItemFromSongsToCategoryDetails:) name:@"REMOVE_ITEM_TO_CATEGORY" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(turnOnPlayerScreen:) name:@"TURN_ON_PLAYER" object:nil];
+    
+    //adding right bar button
+    self.rightBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPlay target:self action:@selector(rightBarButtonClick:)];
+    
+    self.navigationItem.rightBarButtonItem = self.rightBarButton;
 }
 
 - (void)viewDidLoad {
@@ -41,6 +47,8 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    
+    self.rightBarButton.enabled = self.isShow;
     
     //show progress
     [SVProgressHUD showWithStatus:@"Loading..."];
@@ -81,6 +89,12 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - Turn on - turn off player screen notification
+
+- (void)turnOnPlayerScreen:(id)sender {
+    [self.rightBarButton setEnabled:YES];
 }
 
 #pragma mark - Setup data
@@ -181,6 +195,8 @@
     return 70;
 }
 
+#pragma mark - Tableview delegate
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     //------------------------------
     // playing music
@@ -190,11 +206,20 @@
     
     [SSCPlayerViewController shareInstance].currentTrack = [self.songs objectAtIndex:indexPath.row];
     [SSCPlayerViewController shareInstance].listTrack = self.songs;
+    [SSCPlayerViewController shareInstance].isChangeTrack = YES;
     //------------------------------
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
+#pragma mark - Right barbutton event --> show player screen
+
+- (void)rightBarButtonClick:(id)sender {
+    UINavigationController *nvSSCPplayer = [[UINavigationController alloc] initWithRootViewController:[SSCPlayerViewController shareInstance]];
+    [self presentViewController:nvSSCPplayer animated:YES completion:nil];
+    [SSCPlayerViewController shareInstance].title = @"NOW PLAYING";
+    [SSCPlayerViewController shareInstance].isChangeTrack = NO;
+}
 
 #pragma mark - Dealloc
 
