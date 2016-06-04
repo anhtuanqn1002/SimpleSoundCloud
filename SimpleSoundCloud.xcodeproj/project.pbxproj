@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		36A7D65B1D02711500DD4E04 /* SSCPlayerBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36A7D6591D02711500DD4E04 /* SSCPlayerBarViewController.m */; };
+		36A7D65C1D02711500DD4E04 /* SSCPlayerBarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 36A7D65A1D02711500DD4E04 /* SSCPlayerBarViewController.xib */; };
 		4507407D1C181936005EF4A6 /* icon_artwork_default.png in Resources */ = {isa = PBXBuildFile; fileRef = 4507406E1C181936005EF4A6 /* icon_artwork_default.png */; };
 		4507407E1C181936005EF4A6 /* icon_artwork_default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4507406F1C181936005EF4A6 /* icon_artwork_default@2x.png */; };
 		4507407F1C181936005EF4A6 /* icon_artwork_default@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 450740701C181936005EF4A6 /* icon_artwork_default@3x.png */; };
@@ -112,6 +114,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		36A7D6581D02711500DD4E04 /* SSCPlayerBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSCPlayerBarViewController.h; sourceTree = "<group>"; };
+		36A7D6591D02711500DD4E04 /* SSCPlayerBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSCPlayerBarViewController.m; sourceTree = "<group>"; };
+		36A7D65A1D02711500DD4E04 /* SSCPlayerBarViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SSCPlayerBarViewController.xib; sourceTree = "<group>"; };
 		4507406E1C181936005EF4A6 /* icon_artwork_default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_artwork_default.png; sourceTree = "<group>"; };
 		4507406F1C181936005EF4A6 /* icon_artwork_default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_artwork_default@2x.png"; sourceTree = "<group>"; };
 		450740701C181936005EF4A6 /* icon_artwork_default@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_artwork_default@3x.png"; sourceTree = "<group>"; };
@@ -668,6 +673,9 @@
 		45C996A01C28F14200C9156D /* View */ = {
 			isa = PBXGroup;
 			children = (
+				36A7D6581D02711500DD4E04 /* SSCPlayerBarViewController.h */,
+				36A7D6591D02711500DD4E04 /* SSCPlayerBarViewController.m */,
+				36A7D65A1D02711500DD4E04 /* SSCPlayerBarViewController.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -835,6 +843,7 @@
 				45EB1F511C2A931A0014E00C /* loop@2x.png in Resources */,
 				450740841C181936005EF4A6 /* icon_plus@2x.png in Resources */,
 				45EB1F3E1C2A8C310014E00C /* menuFilled-100.png in Resources */,
+				36A7D65C1D02711500DD4E04 /* SSCPlayerBarViewController.xib in Resources */,
 				45DDF6D01C2D1CA3009CF739 /* shuffle2@3x.png in Resources */,
 				45DDF6C31C2CFDE6009CF739 /* loop_red@2x.png in Resources */,
 				45EB1F551C2A931A0014E00C /* rewind@3x.png in Resources */,
@@ -882,6 +891,7 @@
 				450D80031C19516A0086EBC6 /* SDImageCache.m in Sources */,
 				45701DE81C15725500F5E9AE /* main.m in Sources */,
 				450740A31C181A51005EF4A6 /* SSCCategoriesTableViewController.m in Sources */,
+				36A7D65B1D02711500DD4E04 /* SSCPlayerBarViewController.m in Sources */,
 				45E239731C1A6D7F009317B7 /* FMDatabaseAdditions.m in Sources */,
 				45F554AB1C23EEB4001A60D8 /* NSString+Encoding.m in Sources */,
 				450D800B1C19516A0086EBC6 /* UIImage+GIF.m in Sources */,
